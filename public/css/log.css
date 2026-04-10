@@ -1,0 +1,228 @@
+/* === Global Style === */
+body {
+  background-color: #f8eecd;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* === Wrapper === */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+/* === Container === */
+.login-container {
+  width: 950px;
+  min-height: 550px;
+  display: flex;
+  align-items: stretch;
+  border: 2px solid #f4ca64;
+  background-color: #fff;
+}
+
+/* === Left Side === */
+.login-left {
+  position: relative;
+  flex: 1;
+  background-image: url('../images/bg-login.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.login-left .overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+.login-left .text-content {
+  position: relative;
+  z-index: 1;
+  padding: 40px;
+  text-align: left;
+  transform: translateY(-100px); /* Naikkan teks sedikit */
+}
+
+.login-left h2 {
+  font-family: 'Abhaya Libre', serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.4;
+}
+
+.login-left p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+/* === Right Side === */
+.login-right {
+  flex: 1;
+  background-color: #241520;
+  color: #fff;
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
+/* form agar fleksibel */
+.login-right form {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Judul dan subjudul */
+.login-right h4 {
+  font-family: 'Abhaya Libre', serif;
+  font-weight: 600;
+  font-size: 24px;
+  text-align: left;
+}
+
+.login-right p {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #b5b5b5;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+/* === Form Elements === */
+.form-label {
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+}
+
+.form-control {
+  background-color: transparent;
+  border: 1px solid #444;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.form-control:focus {
+  background-color: transparent;
+  border-color: #f4ca64;
+  color: #fff;
+  box-shadow: none;
+}
+
+/* === Button === */
+.btn-login {
+  background-color: #fff;
+  color: #000;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  border-radius: 0;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.btn-login:hover {
+  background-color: #f4ca64;
+}
+
+/* === Links & Footer === */
+a {
+  color: #f4ca64;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+.login-footer p,
+.login-footer a {
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    width: 90%;
+    min-height: auto;
+  }
+
+  .login-left {
+    height: 200px;
+  }
+
+  .login-right {
+    padding: 40px 30px;
+    align-items: center;
+  }
+  
+
+  .login-right form {
+    max-width: 100%;
+  }
+
+  .login-left .text-content {
+    transform: translateY(-60px);
+  }
+
+}
+
+/* === Footer === */
+.login-footer {
+  text-align: center;
+  margin-top: 30px;
+  display: inline-block;
+  align-self: center;    /* center elemen di dalam flex container */
+
+}
+
+.login-footer p,
+.login-footer a {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.login-footer a {
+  color: #f4ca64;
+  font-weight: 500;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+.popup{
+    position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #470500;
+        color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

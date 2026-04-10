@@ -1,0 +1,361 @@
+/* public/css/admin.css */
+
+/* =================================
+   BASE LAYOUT
+   ================================= */
+body {
+    /* Menghilangkan margin browser default */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Memastikan body mengisi seluruh viewport */
+    background-color: #EDE4A8A3;
+    font-family: 'Abhaya Libre', serif;
+}
+
+/* Main Content akan fleksibel mengisi sisa ruang, dan mengatur anaknya vertikal */
+.main-content {
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column;
+    margin-left: 290px; 
+    margin-top: 20px; 
+    margin-right: 20px; 
+    height: calc(100vh - 40px);
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* KONTEN UTAMA YANG BISA DI-SCROLL */
+.main-content main {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    padding-bottom: 20px; 
+}
+
+/* =================================
+   SIDEBAR (KIRI) STYLES
+   ================================= */
+.sidebar-container {
+    background-color:white;
+    padding: 20px;
+    width: 250px;
+    min-height: 100vh;
+    position: fixed; 
+    top: 20px;
+    left: 20px;
+    bottom: 20px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;}
+
+.sidebar-container .brand-info img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sidebar-container .brand-info .h5 {
+    font-weight: bold;
+    color: #333;
+}
+
+.sidebar-scroll-area {
+    /* MODIFIKASI: Mengambil semua sisa ruang vertikal di bawah Brand Info */
+    flex-grow: 1; 
+    /* MODIFIKASI: Mengaktifkan scroll pada area ini */
+    overflow-y: auto; 
+    
+    /* Atur padding di sekitar konten scroll */
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-right: 5px; /* Untuk scrollbar */
+}
+/* Nav Link Styling */
+.sidebar-container .navigation-menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar-container .nav-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.2s, font-weight 0.2s;
+}
+
+/* Active State */
+.sidebar-container .nav-link.active {
+    background-color: #fce7b0; /* Warna aktif sidebar */
+    font-weight: bold;
+}
+
+.sidebar-container .nav-link:hover:not(.active) {
+    background-color: #f0ebe1;
+}
+
+/* Logout Button Style */
+.sidebar-container .btn-logout {
+    background-color: #fce7b0;
+    color: #333;
+    font-weight: bold;
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 25px;
+    border: none;
+    transition: background-color 0.3s;
+}
+.sidebar-container .btn-logout:hover {
+    background-color: #fcd881;
+}
+
+.navigation-menu {
+    flex-grow: 1; 
+    overflow-y: auto; 
+    padding-right: 5px;
+    padding-bottom: 10px;
+}
+.account-center-image,
+#logout-form-sidebar { /* Gunakan ID/class yang sesuai untuk form logout */
+    flex-shrink: 0; /* Pastikan elemen ini tidak menyusut */
+}
+
+/* =================================
+   HEADER STYLES
+   ================================= */
+.header-container {
+    padding: 15px 30px;
+    border-bottom: 1px solid #eee;
+    background-color:white;
+    border-radius: 15px;
+    /* Memberi shadow halus di bawah header agar ada kesan terpisah dari main content */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); 
+}
+
+.search-box {
+    width: 400px;
+    /* MODIFIKASI: Pastikan background-color-nya adalah putih */
+    background-color: white; 
+    padding: 8px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.search-box input {
+    /* KUNCI: Menghilangkan border dan background yang mungkin dibawa Bootstrap/browser */
+    border: none;
+    background: transparent;
+    padding: 0;
+    outline: none; /* Menghilangkan border/outline saat diklik/fokus */
+    width: 100%;
+    margin-left: 5px; 
+}
+.search-box input:focus {
+    box-shadow: none !important; 
+    border: none !important;
+    outline: none !important;
+}
+
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* =================================
+   DROPDOWN PROFILE STYLES
+   ================================= */
+
+/* Container Utama Dropdown */
+.dropdown-menu {
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Style untuk Header Dropdown (Avatar dan Nama) */
+.dropdown-menu .dropdown-header {
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    color: #333;
+    font-size: 1rem;
+    font-weight: bold;
+    border-bottom: none; /* Hapus border default jika ada */
+}
+
+/* Style untuk Avatar di Dropdown Header */
+.dropdown-menu .dropdown-avatar {
+    width: 48px; 
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Style untuk Ikon Utama (My Profile dan Logout) */
+.dropdown-menu .dropdown-icon-lg {
+    /* Perbesar ukuran ikon */
+    font-size: 1.2rem; 
+    /* Atur lebar fixed agar teks sejajar */
+    width: 30px; 
+    text-align: center;
+    color: #333; /* Warna ikon gelap */
+}
+
+/* Style untuk Item Dropdown */
+.dropdown-menu .dropdown-item {
+    padding: 10px 1rem;
+    border-radius: 8px; /* Sudut item melengkung */
+    transition: background-color 0.2s;
+    font-size: 1rem;
+}
+
+/* Hapus padding dari list item agar item-item dropdown menempel tepi */
+.dropdown-menu li {
+    padding: 0;
+}
+
+/* =================================
+   DASHBOARD CARD STYLES
+   ================================= */
+.card-content-bg {
+    background-color: white; /* Warna Putih untuk kotak konten di dalam latar belakang krem */
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.table-header-custom th {
+    background-color: #fce7b0; /* Warna header tabel */
+    font-weight: bold;
+}
+
+.icon-wrapper {
+    /* Warna background krem pucat */
+    background-color: #fce7b0; 
+    /* Atur lebar dan tinggi agar menjadi kotak/lingkaran */
+    width: 48px; 
+    height: 48px;
+    /* Sudut melengkung */
+    border-radius: 8px;
+    
+    /* Pusatkan ikon di tengah */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 2. Warna Ikon di dalamnya */
+.icon-wrapper i {
+    /* Gunakan warna gelap (sesuai skema warna Anda) */
+    color: #333; 
+    font-size: 1.2rem;
+}
+
+/* 3. Style Angka Utama (115, Rp 50.000) */
+.stat-number {
+    /* Perbesar ukuran font (sesuai h2/h1) */
+    font-size: 2.5rem; 
+    /* Pastikan tebal */
+    font-weight: 700; 
+    /* Margin atas untuk memisahkan dari teks "Today's Order" */
+    margin-top: 5px; 
+    /* Warna teks gelap */
+    color: #333;
+    /* Hapus margin default jika ada */
+    margin-bottom: 0; 
+}
+
+/* 4. Teks Deskripsi (Today's Order, Today's Income) */
+.card-content-bg p.fw-medium {
+    /* Sesuaikan ukuran font jika terlalu besar */
+    font-size: 1rem; 
+    color: #333;
+}
+
+/* CSS untuk menimpa gaya Bootstrap Tabs agar sesuai desain */
+.nav-tabs {
+    border-bottom: none !important; /* Menghilangkan garis bawah tebal bawaan Bootstrap */
+}
+
+.nav-tabs .nav-link {
+    color: #888; /* Teks abu-abu untuk tab tidak aktif */
+    border: none;
+    border-bottom: 3px solid transparent; /* Garis bawah transparan */
+    padding: 0.5rem 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tabs .nav-link:hover {
+    border-color: transparent; /* Hilangkan perubahan warna border saat hover */
+}
+
+/* Gaya untuk tab yang sedang aktif */
+.nav-tabs .nav-link.active {
+    color: #333 !important; /* Teks gelap/hitam untuk tab aktif */
+    /* Warna garis bawah tebal (cokelat/hitam) agar menonjol */
+    border-bottom: 3px solid #333 !important; 
+    background-color: transparent !important;
+}
+
+.profile-avatar {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #999; 
+}
+
+.alert-fixed {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4BB543;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    animation: fadeInOut 4s ease forwards;
+    z-index: 9999;
+}
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    10%, 90% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+
+
+
+.rating-stars .star {
+    font-size: 28px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.rating-stars .star.active {
+    color: gold;
+}
+
+.rating i {
+    font-size: 16px;
+    color: gold;
+}
+.rating i.inactive {
+    opacity: 0.3; /* atau bisa pakai color: #ccc; */
+}
