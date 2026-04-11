@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\Review;
 
 class ProductController extends Controller
 {
@@ -18,8 +20,11 @@ class ProductController extends Controller
     }
 
     public function show($id)
-    {
-        $product = Product::findOrFail($id); // jika tidak ditemukan, 404
-        return view('detail', compact('product'));
-    }  
+{
+    $product = Product::with('reviews.user')->findOrFail($id);
+
+    return view('detail', compact('product'));
+}
+
+    
 }

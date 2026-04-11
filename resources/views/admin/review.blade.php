@@ -1,56 +1,7 @@
 @extends('layouts.admin')
-
-@php
-    $user = Auth::user();
-
-    // Dummy Data for Statistics
-    $averageRating = 4.95;
-    $totalReviews = 187;
-    
-    // Width percentages for the progress bars to match the image visually
-    $ratingBars = [
-        '5 Star' => 95,
-        '4 Star' => 80,
-        '3 Star' => 60,
-        '2 Star' => 25,
-        '1 Star' => 15,
-    ];
-
-    // Dummy Data for the Chart (Heights in percentage)
-    $weeklyChart = [
-        'M' => 20, 'T' => 40, 'W' => 60, 'T' => 80, 'F' => 100, 'S' => 85, 'S' => 85
-    ];
-
-    // Dummy Data for Reviews
-    $reviews = [
-        (object)[
-            'service_name' => 'Bread',
-            'customer_name' => 'John',
-            'rating' => 5,
-            'review_text' => 'Great product! Really loved the quality and fast delivery.',
-            'image' => 'images/default-avatar.png' // Or whatever default image you have
-        ],
-        (object)[
-            'service_name' => 'Donut',
-            'customer_name' => 'John',
-            'rating' => 5,
-            'review_text' => 'Great product! Really loved the quality and fast delivery.',
-            'image' => 'images/default-avatar.png'
-        ],
-        (object)[
-            'service_name' => 'Cookies',
-            'customer_name' => 'John',
-            'rating' => 5,
-            'review_text' => 'Great product! Really loved the quality and fast delivery.',
-            'image' => 'images/default-avatar.png'
-        ]
-    ];
-@endphp
-
 @section('content')
 
 <style>
-    /* Typography */
     .heading-serif {
         font-family: 'Abhaya Libre', serif;
         color: #5C4334;
@@ -60,7 +11,6 @@
     .text-light-brown { color: #A69485; }
     .star-color { color: #E5C17C; }
 
-    /* Top Stats Cards */
     .stats-card {
         background-color: #EADFC8; /* Solid tan background */
         border-radius: 16px;
@@ -70,7 +20,6 @@
         height: 100%;
     }
 
-    /* Custom Rating Progress Bars */
     .rating-bar-container {
         height: 8px;
         background-color: #DBC5A0; /* Light tan background */
@@ -84,7 +33,6 @@
         border-radius: 10px;
     }
 
-    /* Weekly Chart */
     .chart-bar-container {
         display: flex;
         flex-direction: column;
@@ -99,7 +47,6 @@
         border-radius: 10px;
     }
 
-    /* Main White Card */
     .main-white-card {
         background-color: #FFFCF8;
         border-radius: 16px;
@@ -108,7 +55,6 @@
         padding: 30px;
     }
 
-    /* Buttons */
     .btn-pill {
         border-radius: 50px;
         padding: 4px 16px;
@@ -123,7 +69,6 @@
     .btn-detail { background-color: #8B6A4B; }
     .btn-delete { background-color: #D32F2F; }
 
-    /* Review Items */
     .review-item {
         background-color: #FDF6E3; /* Light tan inner background */
         border-radius: 12px;
@@ -145,7 +90,7 @@
                     
                     <div class="pe-4">
                         <h5 class="text-brown fw-bold mb-3">Users Rating</h5>
-                        <h1 class="display-4 fw-bold text-brown mb-0" style="line-height: 1;">{{ $averageRating }}</h1>
+                        <h1 class="display-4 fw-bold text-brown mb-0" style="line-height: 1;">{{ number_format($averageRating, 2) }}</h1>
                         <div class="star-color mb-1" style="font-size: 1.1rem;">
                             @for ($i = 1; $i <= 5; $i++)
                                 <i class="fas fa-star"></i>
@@ -213,33 +158,42 @@
         <div>
             @foreach ($reviews as $review)
                 <div class="review-item">
-                    
+
                     <div class="d-flex gap-3">
-                        <div style="width: 50px; height: 50px; border-radius: 50%; overflow: hidden; background-color: #3E2723; flex-shrink: 0;">
-                            <img src="{{ asset($review->image) }}" alt="Customer" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;">
-                        </div>
                         
+
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background:#3E2723;">
+                            <img src="{{ asset('storage/' . ($review->user->profile_photo ?? 'img/image.png')) }}"
+                            alt="Service Image"
+                            class="rounded-circle me-3"
+                            style="width: 50px; height: 50px; object-fit: cover;">
+                        </div>
+
                         <div>
-                            <h6 class="text-brown fw-bold mb-1">{{ $review->service_name }}</h6>
+                            <h6 class="text-brown fw-bold mb-1">
+                                {{ $review->user->name }}
+                            </h6>
+
                             <div class="text-light-brown mb-1" style="font-size: 0.85rem;">
-                                <span class="fw-bold text-brown">Customer</span> :{{ $review->customer_name }}
+                                <strong>Product : </strong>{{ $review->product->name }}
                             </div>
+
                             <div class="star-color mb-1" style="font-size: 0.8rem;">
                                 @for($i = 1; $i <= 5; $i++)
                                     <i class="fas fa-star {{ $i <= $review->rating ? '' : 'text-muted opacity-25' }}"></i>
                                 @endfor
                             </div>
+
                             <div class="text-light-brown" style="font-size: 0.85rem;">
-                                <span class="fw-bold text-brown">Review</span> &nbsp;&nbsp;:{{ $review->review_text }}
+                                <strong>Review:</strong> {{ $review->review }}
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="d-flex gap-2 ms-3">
                         <button class="btn-pill btn-detail">Detail</button>
-                        <button class="btn-pill btn-delete">Hapus</button>
                     </div>
-                    
+
                 </div>
             @endforeach
         </div>

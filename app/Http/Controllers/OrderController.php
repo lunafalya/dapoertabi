@@ -52,7 +52,8 @@ class OrderController extends Controller
         // kosongkan cart
         session()->forget('cart');
 
-        return redirect()->route('cart.index')
-            ->with('success','Order berhasil dibuat');
+        return redirect()
+            ->route('cart.index')
+            ->with('success', 'Pembayaran berhasil!');
     }
 }

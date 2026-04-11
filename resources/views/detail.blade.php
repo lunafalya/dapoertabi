@@ -79,6 +79,10 @@
             <p class="order-brand">Dapoer Tabi</p>
             <h1 class="order-title">{{ $product->name }}</h1>
             <h2 class="order-price">Rp {{ number_format($product->price, 0, ',', '.') }}</h2>
+            <p>
+              ⭐{{ number_format($product->reviews->avg('rating'), 1) }}/5
+              ({{ $product->reviews->count() }} reviews)
+            </p>
             
             <form action="{{ route('cart.add', $product->id) }}" method="POST" id="addToCartForm">
                 @csrf
@@ -99,21 +103,31 @@
             </div>
             
             <div class="tab-content" id="review-content">
-                <div class="review-item">
-                    <p class="reviewer-name">Elena</p>
-                    <div class="rating">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="review-text">
-                        "Eleifend arcu non lorem justo in tempus purus gravida. Est tortor 
-                        egestas sed feugiat elementum. Viverra nulla amet a ultrices 
-                        massa dui. Tortor est purus morbi vitae arcu suspendisse amet."
-                    </p>
-                </div>
+              @if($product->reviews->isNotEmpty())
+                  @foreach($product->reviews as $review)
+                      <div class="review-item">
+                          <p class="reviewer-name">
+                              {{ $review->user->name }}
+                          </p>
+
+                          <div class="rating">
+                              @for($i = 1; $i <= 5; $i++)
+                                  <i class="fa-solid fa-star
+                                      {{ $i <= $review->rating ? 'active' : 'inactive' }}">
+                                  </i>
+                              @endfor
+                          </div>
+
+                          <p class="review-text">
+                              "{{ $review->review }}"
+                          </p>
+                      </div>
+                  @endforeach
+              @else
+                  <p class="no-review">No reviews yet.</p>
+              @endif
+
+          </div>
                 </div>
 
                 

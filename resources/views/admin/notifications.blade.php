@@ -1,37 +1,4 @@
 @extends('layouts.admin')
-
-@php
-    $user = Auth::user();
-
-    // DUmmy Data
-    $notifications = [
-        [
-            'icon' => 'fas fa-box',
-            'message' => 'Order masuk untuk "Bread" pukul "10.00-12.00"',
-            'time' => '1 minutes ago',
-            'is_read' => true, // This will make the button lighter tan
-        ],
-        [
-            'icon' => 'far fa-comment',
-            'message' => 'Ulasan bintang 5 diterima untuk "Pizza"',
-            'time' => '5 minutes ago',
-            'is_read' => false, // This keeps the button dark brown
-        ],
-        [
-            'icon' => 'far fa-file-alt', // or fas fa-receipt
-            'message' => 'Pesanan #12345 dikonfirmasi',
-            'time' => '10 minutes ago',
-            'is_read' => false,
-        ],
-        [
-            'icon' => 'far fa-times-circle',
-            'message' => 'Pesanan #12344 dibatalkan',
-            'time' => '15 minutes ago',
-            'is_read' => false,
-        ]
-    ];
-@endphp
-
 @section('content')
 
 <style>
@@ -118,11 +85,6 @@
             <i class="far fa-calendar-alt" data-toggle></i>
         </div>
         
-        <div class="date-picker-pill" id="endDateWrapper">
-            <input type="text" id="endDatePicker" placeholder="mm / dd / yy" data-input>
-            <i class="far fa-calendar-alt" data-toggle></i>
-        </div>
-        
     </div>
     
     <div style="height: 1px; background-color: #F0EAE1; margin-bottom: 1rem;"></div>
@@ -144,12 +106,7 @@
                         <td class="text-light-brown text-end pe-4" style="font-size: 0.9rem; width: 140px;">
                             {{ $notification['time'] }}
                         </td>
-                        
-                        <td style="width: 140px; text-align: right;">
-                            <button class="btn-mark-read {{ $notification['is_read'] ? 'btn-read' : 'btn-unread' }}">
-                                Mark as Read
-                            </button>
-                        </td>
+                    
                     </tr>
                 @empty
                     <tr>

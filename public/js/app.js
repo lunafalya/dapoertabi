@@ -211,5 +211,27 @@ function loadSelectedProducts() {
   }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll(".rating-stars .star");
+    const ratingInput = document.getElementById("ratingValue");
+
+    stars.forEach((star, index) => {
+        star.addEventListener("click", function () {
+            // Set rating berdasarkan index (index mulai dari 0 → jadi +1)
+            const rating = index + 1;
+            ratingInput.value = rating; // update input hidden
+
+            // Update tampilan bintang
+            stars.forEach((s, i) => {
+                if (i < rating) {
+                    s.classList.add("active");
+                } else {
+                    s.classList.remove("active");
+                }
+            });
+        });
+    });
+});
+
 // jalanin pas load
 loadSelectedProducts();

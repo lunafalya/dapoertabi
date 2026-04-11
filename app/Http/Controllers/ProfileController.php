@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\Checkout;
+use App\Models\Review;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 
@@ -52,5 +56,20 @@ class ProfileController extends Controller
     }
 
 }
+
+    public function index()
+{
+    $bookings = Order::with([
+        'items.product',
+        'items.review'
+    ])
+    ->where('user_id', auth()->id())
+    ->latest()
+    ->get();
+
+    return view('history', compact('bookings'));
+}
+
+
 
 }

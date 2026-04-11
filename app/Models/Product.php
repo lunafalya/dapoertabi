@@ -20,4 +20,14 @@ class Product extends Model
         'file_path'
     ];
 
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function items()
+    {
+        return $this->hasMany(Checkout::class);
+    }
+
 }

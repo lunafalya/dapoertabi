@@ -10,7 +10,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <link href="css/style.css" rel="stylesheet">
+  <!-- <link href="css/style.css" rel="stylesheet"> -->
 </head>
 <body>
 

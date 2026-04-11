@@ -1,52 +1,4 @@
-@php
-    // Dummy Auth User (prevents errors if you aren't logged in yet)
-    $user = Auth::user() ?? (object)['name' => 'Admin', 'role' => 'admin', 'profile_photo' => null];
 
-    // 1. Create a Master List of Dummy Bookings mimicking your Figma image
-    $dummyBookings = [
-        (object)[
-            'id' => 1,
-            'user' => (object)['email' => 'belibeli123@gmail.com'],
-            'service' => (object)['name' => 'Bread', 'type' => 'Basic', 'file_path' => ''],
-            'total_price' => 10000,
-            'booking_date' => '2024-10-23',
-            'booking_time' => '10.00-12.00',
-            'status' => 'pending'
-        ],
-        (object)[
-            'id' => 2,
-            'user' => (object)['email' => 'a@.com'],
-            'service' => (object)['name' => 'Cookies', 'type' => '12mm', 'file_path' => ''],
-            'total_price' => 30000,
-            'booking_date' => '2024-10-23',
-            'booking_time' => '10.00-12.00',
-            'status' => 'pending'
-        ],
-        (object)[
-            'id' => 3, // Changed to 3 so it's unique, but mimics your layout
-            'user' => (object)['email' => 'a@gmail.com'],
-            'service' => (object)['name' => 'Donut', 'type' => '3d', 'file_path' => ''],
-            'total_price' => 15000,
-            'booking_date' => '2024-10-23',
-            'booking_time' => '10.00-12.00',
-            'status' => 'completed'
-        ],
-        (object)[
-            'id' => 4,
-            'user' => (object)['email' => 'hohopopp@gmail.com'],
-            'service' => (object)['name' => 'Pizza', 'type' => '14mm', 'file_path' => ''],
-            'total_price' => 15000,
-            'booking_date' => '2024-10-23',
-            'booking_time' => '10.00-12.00',
-            'status' => 'completed'
-        ],
-    ];
-
-    // 2. Simulate what the Backend Controller will eventually do
-    $bookings = $dummyBookings; // All tab
-    $pendingBookings = array_filter($dummyBookings, fn($b) => $b->status === 'pending'); // Pending tab
-    $doneBookings = array_filter($dummyBookings, fn($b) => $b->status === 'completed'); // Done tab
-@endphp
 @extends('layouts.admin')
 
 @section('content')
@@ -185,36 +137,65 @@
                             <th>Price</th>
                             <th>Time</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($bookings as $booking)
-                            <tr>
-                                <td>{{ str_pad($booking->id, 3, '0', STR_PAD_LEFT) }}</td>
-                                <td>{{ $booking->user->email ?? '-' }}</td>
-                                <td>{{ $booking->service->name ?? '-' }}</td>
-                                <td>{{ $booking->service->type ?? 'Basic' }}</td> 
-                                <td>Rp.{{ number_format($booking->total_price ?? 10000, 0, ',', '.') }}</td>
-                                <td>
-                                    {{ \Carbon\Carbon::parse($booking->booking_date)->format('d-m-Y') }}<br>
-                                    <span style="font-size: 0.85em; color: var(--text-muted);">({{ $booking->booking_time ?? '10.00-12.00' }})</span>
-                                </td>
-                                <td>
-                                    @if ($booking->status == 'pending')
-                                        <span class="status-pill status-pending-pill">Pending</span>
-                                    @elseif ($booking->status == 'completed' || $booking->status == 'approved' || $booking->status == 'done')
-                                        <span class="status-pill status-done-pill">Completed</span>
+                        <tr>
+                            <td>{{ str_pad($booking->id, 3, '0', STR_PAD_LEFT) }}</td>
+
+                            <td>{{ $booking->user->email ?? '-' }}</td>
+
+                            {{-- PRODUCTS --}}
+                            <td>
+                                @foreach ($booking->items as $item)
+                                    {{ $item->product->name ?? '-' }} ({{ $item->qty }})<br>
+                                @endforeach
+                            </td>
+
+                            {{-- PAYMENT --}}
+                            <td>{{ strtoupper($booking->payment_method) }}</td>
+
+                            <td>
+                                Rp {{ number_format($booking->total) }}
+                            </td>
+
+                            <td>
+                                {{ $booking->created_at->format('d-m-Y H:i') }}
+                            </td>
+
+                            <td>
+                                @if ($booking->status === 'pending')
+                                    <span class="status-pill status-pending-pill">Pending</span>
+                                @elseif ($booking->status === 'done')
+                                    <span class="status-pill status-done-pill">Done</span>
+                                @else
+                                    <span class="status-pill bg-light text-secondary">
+                                        {{ ucfirst($booking->status) }}
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td>
+                                @if ($booking->status == 'pending' && $booking->payment_method == 'cash')
+                                        <form action="{{ route('admin.booking.done', $booking->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button class="btn btn-success btn-sm">Accept</button>
+                                        </form>
                                     @else
-                                        <span class="status-pill bg-light text-secondary">{{ ucfirst($booking->status) }}</span>
+                                        –
                                     @endif
-                                </td>
-                            </tr>
+                            </td>
+                        </tr>
                         @empty
-                            <tr>
-                                <td colspan="7" class="text-center text-muted py-4" style="background: #FFFCF8; border-radius: 8px;">No bookings found.</td>
-                            </tr>
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                No orders found.
+                            </td>
+                        </tr>
                         @endforelse
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
         </div>
@@ -231,7 +212,11 @@
                                     class="rounded me-3 shadow-sm"
                                     style="width: 70px; height: 70px; object-fit: cover; background-color: #f7f3e8;">
                                 <div>
-                                    <h6 class="fw-bold mb-1" style="color: #5C4334;">{{ $booking->service->name ?? '-' }}</h6>
+                                   <td>
+                                        @foreach ($booking->items as $item)
+                                            {{ $item->product->name ?? '-' }} ({{ $item->qty }})<br>
+                                        @endforeach
+                                    </td>
                                     <small style="color: var(--text-muted);">ID: {{ str_pad($booking->id, 4, '0', STR_PAD_LEFT) }}</small>
                                 </div>
                             </div>
@@ -247,7 +232,7 @@
                             <div>
                                 <div style="color: #5C4334; font-weight: 600; font-size: 0.9rem;">Total</div>
                                 <div style="color: #5C4334; font-weight: 700; font-size: 1.1rem;">
-                                    Rp.{{ number_format($booking->total_price ?? 10000, 0, ',', '.') }}
+                                    Rp.{{ number_format($booking->total) }}
                                 </div>
                             </div>
                         </div>
@@ -270,7 +255,11 @@
                                     class="rounded me-3 shadow-sm"
                                     style="width: 70px; height: 70px; object-fit: cover; background-color: #f7f3e8;">
                                 <div>
-                                    <h6 class="fw-bold mb-1" style="color: #5C4334;">{{ $booking->service->name ?? '-' }}</h6>
+                                    <h6 class="fw-bold mb-1" style="color: #5C4334;">
+                                        @foreach ($booking->items as $item)
+                                            {{ $item->product->name ?? '-' }} ({{ $item->qty }})<br>
+                                        @endforeach
+                            </h6>
                                     <small style="color: var(--text-muted);">ID: {{ str_pad($booking->id, 4, '0', STR_PAD_LEFT) }}</small>
                                 </div>
                             </div>
@@ -280,13 +269,13 @@
                             <div>
                                 <div class="status-text-pending">Pending</div>
                                 <div style="color: var(--text-muted); font-size: 0.9rem;">
-                                    {{ \Carbon\Carbon::parse($booking->booking_date)->format('d-m-Y') }}, {{ $booking->booking_time ?? '15:24' }}
+                                     {{ $booking->created_at->format('d-m-Y H:i') }}
                                 </div>
                             </div>
                             <div>
                                 <div style="color: #5C4334; font-weight: 600; font-size: 0.9rem;">Total</div>
                                 <div style="color: #5C4334; font-weight: 700; font-size: 1.1rem;">
-                                    Rp.{{ number_format($booking->total_price ?? 10000, 0, ',', '.') }}
+                                    Rp.{{ number_format($booking->total) }}
                                 </div>
                             </div>
                         </div>

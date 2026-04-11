@@ -70,6 +70,7 @@
         @foreach($cart as $id => $item)
         <div class="cart-item">
 
+
             <img src="{{ asset('storage/'.$item['image']) }}" class="cart-img">
 
             <div class="cart-name">{{ $item['name'] }}</div>

@@ -9,6 +9,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\Admin\AdminProfileController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminBookingController;
+use App\Http\Controllers\Admin\AdminReviewController;
+use App\Http\Controllers\Admin\AdminNotificationController;
+use App\Http\Controllers\Admin\AdminController;
 
 /// USERS ROUTES
 Route::get('/login', [AuthController::class,'showLogin'])->name('login');
@@ -40,9 +44,14 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
     Route::get('/checkout', [OrderController::class, 'index'])->name('checkout.index');
+    Route::get('/checkout/success', [OrderController::class, 'success'])->name('checkout.success');
 
-    Route::get('/review/{product}', [ReviewController::class,'create'])->name('review.create');
-Route::post('/review', [ReviewController::class,'store'])->name('review.store');
+    Route::get('/history', [ProfileController::class, 'index'])->name('history');
+
+    Route::get('/review/{checkout}', [ReviewController::class,'create'])->name('review.create');
+    Route::post('/review', [ReviewController::class,'store'])->name('review.store');
+
+    
 });
 
 
@@ -50,9 +59,7 @@ Route::post('/review', [ReviewController::class,'store'])->name('review.store');
 /// ADMIN ROUTES
 
 Route::middleware(['auth','admin'])->group(function () {
-    Route::get('/admin', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/admin/profile', [AdminProfileController::class,'show'])
         ->name('admin.profile');
@@ -72,10 +79,19 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::delete('/admin/products/{id}', [AdminProductController::class,'destroy'])
         ->name('admin.products.destroy');
 
+    Route::get('admin/booking', [AdminBookingController::class, 'index'])
+        ->name('admin.booking');
+
+    Route::patch('/admin/booking/{order}/status', [AdminBookingController::class, 'updateStatus'])
+        ->name('admin.booking.updateStatus');
+
+    Route::post('/admin/booking/{order}/done', [AdminBookingController::class, 'done']
+        )->name('admin.booking.done');
+
     Route::get('/admin/messages', function () { return view('admin.message'); })->name('admin.messages');
-    Route::get('/admin/notifications', function () { return view('admin.notifications'); })->name('admin.notifications');
-    Route::get('/admin/bookings', function () { return view('admin.booking'); })->name('admin.bookings');
-    Route::get('/admin/reviews', function () { return view('admin.review'); })->name('admin.reviews');
+    Route::get('/admin/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');
+
+    Route::get('/admin/reviews', [AdminReviewController::class, 'index'])->name('admin.reviews');
     Route::get('/admin/pdf', function () { return view('admin.pdf'); })->name('admin.pdf');
 
 });
@@ -92,13 +108,4 @@ Route::get('/detail', function () {
     return view('detail');
 });
 
-Route::get('/history', function () {
-    return view('history');
-});
-
-Route::get('/review', function () {
-    return view('review');
-});
-
 ?>
-

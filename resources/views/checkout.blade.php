@@ -81,6 +81,21 @@
               ->implode(', ');
       @endphp
 
+        @if(session('success'))
+        <div id="successPopup" class="popup-success">
+            <div class="popup-box">
+                <h3>✅ {{ session('success') }}</h3>
+                <p>Pesanan kamu sedang diproses.</p>
+            </div>
+        </div>
+
+        <script>
+            setTimeout(() => {
+                window.location.href = "{{ route('home') }}";
+            }, 2500);
+        </script>
+        @endif
+
       <div class="input-row">
           <input type="text" value="{{ $selectedProducts }}" readonly>
       </div>
@@ -165,7 +180,9 @@
           </p>
       </div>
 
-      <button type="submit" class="checkout-btn">Proceed to Payment</button>
+          <button type="submit" class="order-btn">
+        Proceed to Checkout
+    </button>
 
     </form>
   </div>
@@ -215,7 +232,17 @@
 
 <script src="{{ asset('js/app.js') }}"></script>
 
+@if(session('success'))
+<script>
+    alert("{{ session('success') }}");
+</script>
+@endif
 
+<script>
+function closeSuccess() {
+    document.getElementById('successModal').remove();
+}
+</script>
 
 </body>
 </html>

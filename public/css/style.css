@@ -2393,3 +2393,43 @@ a:hover {
   cursor: not-allowed;
   color: #555;
 }
+
+.popup-success {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.success-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.success-box {
+    background: white;
+    padding: 24px;
+    border-radius: 10px;
+    text-align: center;
+    width: 320px;
+}
+
+.success-box button {
+    margin-top: 15px;
+    padding: 8px 16px;
+}
+
+.rating i {
+    color: #ddd;
+}
+
+.rating i.active {
+    color: gold;
+}

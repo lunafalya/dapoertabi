@@ -168,7 +168,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('admin.bookings') }}" class="nav-link-custom {{ request()->routeIs('admin.bookings*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.booking') }}" class="nav-link-custom {{ request()->routeIs('admin.booking*') ? 'active' : '' }}">
                             <i class="fas fa-shopping-cart me-3"></i> Order
                         </a>
                     </li>

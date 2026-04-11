@@ -47,4 +47,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+        public function item()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

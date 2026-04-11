@@ -75,56 +75,69 @@
                 <a href="#" class="tab-item active">Orders</a>
             </div>
 
-<div class="orders-history-container">
-    <h2 class="history-title">History</h2>
-    
-    <table class="history-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Transaction Date</th>
-                <th>Product</th>
-                <th>Status</th>
-                <th>Review</th>
-            </tr>
-        </thead>
-       <tbody>
-          @foreach($orders as $order)
-              @foreach($order->items as $item)
-              <tr>
-                  <td>{{ $order->id }}</td>
+    <div class="orders-history-container">
+        <h2 class="history-title">History</h2>
+        
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Transaction Date</th>
+                    <th>Product</th>
+                    <th>Status</th>
+                    <th>Review</th>
+                </tr>
+            </thead>
+          <tbody>
+            @foreach($bookings as $booking)
+                @foreach($booking->items as $item)
+                <tr>
+                    {{-- ORDER ID --}}
+                    <td>#{{ $booking->id }}</td>
 
-                  <td>{{ $order->created_at->format('M d, Y, h:ia') }}</td>
+                    {{-- DATE --}}
+                    <td>{{ $booking->created_at->format('M d, Y H:i') }}</td>
 
-                  <td>{{ $item->product->name }}</td>
+                    {{-- PRODUCT --}}
+                    <td>
+                        {{ $item->product->name ?? '-' }}
+                        <small class="text-muted">({{ $item->qty }})</small>
+                    </td>
 
-                  <td>
-                      <span class="status completed">
-                          Completed
-                      </span>
-                  </td>
+                    {{-- STATUS --}}
+                    <td>
+                        @if ($booking->status === 'pending')
+                            <span class="status-pill status-pending-pill">Pending</span>
+                        @elseif ($booking->status === 'done')
+                            <span class="status-pill status-done-pill">Done</span>
+                        @else
+                            <span class="status-pill bg-light text-secondary">
+                                {{ ucfirst($booking->status) }}
+                            </span>
+                        @endif
+                    </td>
 
-                  <td>
-                      @if($order->status == 'completed')
-                          @if($item->product->reviews->count())
-                              <span class="review-status added">Review Added</span>
-                          @else
-                              <a href="{{ route('review.create', $item->product->id) }}" 
-                                class="review-btn add">
-                                Add Review
-                              </a>
-                          @endif
-                      @else
-                          <span class="review-status disabled">-</span>
-                      @endif
-                      </td>
-
-              </tr>
-              @endforeach
-          @endforeach
-          </tbody>
-    </table>
-</div>
+                    {{-- REVIEW --}}
+                    <td>
+                        @if ($booking->status === 'done')
+                            @if ($item->review)
+                                <span class="review-status added">Review Added</span>
+                            @else
+                                <a href="{{ route('review.create', $item->id) }}"
+                                  class="review-btn add">
+                                    Add Review
+                                </a>
+                            @endif
+                        @else
+                            <span class="review-status disabled">-</span>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            @endforeach
+            </tbody>
+        </table>
+    </div>
 </section>
 
  <footer>

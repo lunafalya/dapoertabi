@@ -72,42 +72,38 @@
         <h2 class="review-title">Add Review</h2>
 
         <form method="POST" action="{{ route('review.store') }}" class="review-form">
-          @csrf
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
+        @csrf
 
-            <div class="form-group-review">
-                <label class="review-label">Rating</label>
-                <div class="rating-stars">
-                    <span class="star active">&#9733;</span> 
-                    <span class="star active">&#9733;</span>
-                    <span class="star active">&#9733;</span>
-                    <span class="star active">&#9733;</span>
-                    <span class="star">&#9733;</span>
-                </div>
-                <input type="hidden" name="rating_value" id="ratingValue" value="4"> 
+        <input type="hidden" name="product_id" value="{{ $checkout->product->id }}">
+        <input type="hidden" name="rating" id="ratingValue" value="5">
+
+        <!-- RATING -->
+        <div class="form-group-review">
+            <label>Rating</label>
+            <div class="rating-stars" id="starRating">
+                @for($i = 1; $i <= 5; $i++)
+                    <span class="star" data-value="{{ $i }}">★</span>
+                @endfor
             </div>
+        </div>
 
-            <div class="form-group-review">
-                <label class="review-label" for="service_name">Products</label>
-                <input 
-                      type="text" 
-                      value="{{ $product->name }}" 
-                      readonly
-                      class="service-input"
-                  >
-            </div>
+        <!-- PRODUCT -->
+        <div class="form-group-review">
+            <label>Product</label>
+            <input type="text"
+                  value="{{ $checkout->product->name }}"
+                  readonly>
+        </div>
 
-            <div class="form-group-review">
-                <textarea 
-                    id="review_text" 
-                    name="review_text" 
-                    rows="6" 
-                    placeholder="Add Review Here..."
-                ></textarea>
-            </div>
+        <!-- REVIEW -->
+        <div class="form-group-review">
+            <textarea name="review" rows="6"
+                placeholder="Add your review..."
+                required></textarea>
+        </div>
 
-            <button type="submit" class="edit-button">Submit Review</button>
-        </form>
+        <button type="submit">Submit Review</button>
+    </form>
 
     </div>
 </section>
