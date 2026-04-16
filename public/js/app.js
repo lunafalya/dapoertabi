@@ -235,3 +235,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // jalanin pas load
 loadSelectedProducts();
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabItems = document.querySelectorAll('.tab-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabItems.forEach(item => {
+            item.addEventListener('click', function() {
+                tabItems.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                const targetTab = this.getAttribute('data-tab');
+                tabContents.forEach(content => content.classList.remove('active'));
+                document.getElementById(targetTab + '-content').classList.add('active');
+            });
+        });
+    });
+
+   
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+  const button = document.getElementById("addtocartButton");
+  const popup = document.getElementById("cart-popup");
+
+  if (!button || !popup) return;
+
+  button.addEventListener("click", function () {
+
+    popup.classList.add("show");
+
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 2000);
+
+  });
+
+});
+
+ // ================= QTY IN DETAIL =================
+  document.querySelectorAll('.qty-box1').forEach(box => {
+    const minus = box.querySelector('.minus');
+    const plus = box.querySelector('.plus');
+    const value = box.querySelector('.qty-value1');
+
+    minus?.addEventListener('click', () => {
+      let count = parseInt(value.textContent);
+      if (count > 1) {
+        value.textContent = count - 1;
+        updateTotal();
+      }
+    });
+
+    plus?.addEventListener('click', () => {
+      let count = parseInt(value.textContent);
+      value.textContent = count + 1;
+      updateTotal();
+    });
+  });

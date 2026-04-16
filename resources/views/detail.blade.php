@@ -50,8 +50,18 @@
       <i class="bi bi-person profile-icon" id="profileBtn"></i>
 
       <div class="dropdown-content" id="dropdownMenu">
+        @auth
         <a href="{{ url('/profile') }}">Profile</a>
-        <a href="{{ url('/login') }}">Log In</a>
+
+        <form action="{{ url('/logout') }}" method="POST">
+        @csrf
+            <button type="submit">Logout</button>
+        </form>
+        @endauth
+
+        @guest
+            <a href="{{ url('/login') }}">Log In</a>
+        @endguest
       </div>
     </div>
   </div> 
@@ -79,10 +89,16 @@
             <p class="order-brand">Dapoer Tabi</p>
             <h1 class="order-title">{{ $product->name }}</h1>
             <h2 class="order-price">Rp {{ number_format($product->price, 0, ',', '.') }}</h2>
-            <p>
+            <p class="ratings">
               ⭐{{ number_format($product->reviews->avg('rating'), 1) }}/5
               ({{ $product->reviews->count() }} reviews)
             </p>
+
+            <div class="qty-box1">
+                <button class="qty-btn minus">-</button>
+                <span class="qty-value1">2</span>
+                <button class="qty-btn plus">+</button>
+            </div>
             
             <form action="{{ route('cart.add', $product->id) }}" method="POST" id="addToCartForm">
                 @csrf
@@ -177,59 +193,6 @@
   </div>
 </footer>
 
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const tabItems = document.querySelectorAll('.tab-item');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabItems.forEach(item => {
-            item.addEventListener('click', function() {
-                tabItems.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                const targetTab = this.getAttribute('data-tab');
-                tabContents.forEach(content => content.classList.remove('active'));
-                document.getElementById(targetTab + '-content').classList.add('active');
-            });
-        });
-    });
-
-    const profileBtn = document.getElementById('profileBtn');
-    const dropdownMenu = document.getElementById('dropdownMenu');
-    
-    if(profileBtn && dropdownMenu) {
-        profileBtn.addEventListener('click', function() {
-            dropdownMenu.classList.toggle('show');
-        });
-        window.onclick = function(event) {
-            if (!event.target.matches('#profileBtn')) {
-                if (dropdownMenu.classList.contains('show')) {
-                    dropdownMenu.classList.remove('show');
-                }
-            }
-        }
-    }
-
-  document.addEventListener("DOMContentLoaded", function () {
-
-  const button = document.getElementById("addtocartButton");
-  const popup = document.getElementById("cart-popup");
-
-  if (!button || !popup) return;
-
-  button.addEventListener("click", function () {
-
-    popup.classList.add("show");
-
-    setTimeout(() => {
-      popup.classList.remove("show");
-    }, 2000);
-
-  });
-
-});
-  </script>
-
 <div id="cart-popup" class="cart-popup">
   <div class="popup-box">
     <i class="bi bi-check-circle"></i>
@@ -238,5 +201,6 @@
   </div>
 </div>
 
+<script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- <link href="css/style.css" rel="stylesheet"> -->
+  <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -37,6 +37,7 @@
 
       <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
           @csrf
+        <div class="mb-3">
           <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
         </div>
 

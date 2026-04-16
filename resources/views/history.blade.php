@@ -49,8 +49,18 @@
       <i class="bi bi-person profile-icon" id="profileBtn"></i>
 
       <div class="dropdown-content" id="dropdownMenu">
+        @auth
         <a href="{{ url('/profile') }}">Profile</a>
-        <a href="{{ url('/login') }}">Log In</a>
+
+        <form action="{{ url('/logout') }}" method="POST">
+        @csrf
+            <button type="submit">Logout</button>
+        </form>
+        @endauth
+
+        @guest
+            <a href="{{ url('/login') }}">Log In</a>
+        @endguest
       </div>
     </div>
   </div> 
