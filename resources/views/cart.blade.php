@@ -90,7 +90,9 @@
             </div>
 
             <div class="qty-box">
+                <button class="qty-btn minus">-</button>
                 <span class="qty-value">{{ $item['qty'] }}</span>
+                <button class="qty-btn plus">+</button>
             </div>
 
             <div class="cart-total">
@@ -106,7 +108,7 @@
 
         </div>
         @endforeach
-        </div>
+    </div>
 
         </div>
     <!-- Total -->

@@ -103,7 +103,7 @@
       </div>
 
       <div class="form-group">
-          <label>Nama</label>
+          <label>Name</label>
           <input type="text" name="name" value="{{ $user->name }}">
       </div>
 

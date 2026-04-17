@@ -1,10 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 body {
-  font-family: 'Poppins', sans-serif;
   color: #222;
   background: #fff;
 }
@@ -112,7 +114,6 @@ main {
   padding: 10px 15px;
   text-decoration: none;
   display: block;
-  font-family: 'Poppins', sans-serif;
   transition: 0.3s;
 }
 
@@ -122,7 +123,6 @@ main {
   width: 100%;
   padding: 10px 15px;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
   color: #333;
 }
 
@@ -178,6 +178,7 @@ main {
   margin-bottom: 20px;
   color: #8D653D;
   font-weight: normal;
+  font-style: italic;
 }
 
 .home p {
@@ -202,13 +203,13 @@ main {
 .about-section {
   background: linear-gradient(to bottom, #C7A07A, #FFFFFF);
   color: #F5CBA7;
-  padding: 100px 100px;
+  padding: 70px 100px;
 }
 
 .gallery {
   background: linear-gradient(to bottom, #FFFFFF, #C7A07A);
   color: #F5CBA7;
-  padding: 100px 100px;
+  padding: 70px 100px;
 }
 
 .about-container {
@@ -229,6 +230,7 @@ main {
   color: #8D653D;
   margin-bottom: 20px;
   font-weight: normal;
+  font-style: italic;
 }
 
 .about-text p {
@@ -253,6 +255,8 @@ main {
   margin-bottom: 20px;
   font-weight: normal;
   text-align: center;
+  font-style: italic;
+
 }
 
 .contact-text {
@@ -321,10 +325,10 @@ main {
   border-radius: 12px;
 }
 
-.item1 { grid-column: 1 / 2; grid-row: 1 / 3; }
-.item2 { grid-column: 2 / 3; grid-row: 1 / 2; }
+.item1 { grid-column: 2 / 3; grid-row: 1 / 3; }
+.item2 { grid-column: 1 / 2; grid-row: 1 / 2; }
 .item3 { grid-column: 3 / 4; grid-row: 1 / 2; }
-.item4 { grid-column: 2 / 3; grid-row: 2 / 3; }
+.item4 { grid-column: 1 / 2; grid-row: 2 / 3; }
 .item5 { grid-column: 3 / 4; grid-row: 2 / 3; }
 
 
@@ -380,7 +384,7 @@ main {
 /* === OUR SERVICES === */
 .services {
   background: linear-gradient(to bottom, #fff, 50%, #C7A07A);
-  padding: 100px 100px;
+  padding: 70px 100px;
   text-align: center;
 }
 
@@ -396,10 +400,10 @@ main {
   font-size: 2.8rem;
   font-weight: 400;
   color: #8D653D;
+  font-style: italic;
 }
 
 .section-header .view-all {
-  font-family: 'Poppins', sans-serif;
   font-size: 1rem;
   color: #8D653D;
   text-decoration: none;
@@ -449,7 +453,6 @@ main {
 
 .service-filter li {
     color: #ffffff;
-    font-family: 'Poppins', sans-serif; 
     font-size: 18px;
     font-weight: 400;
     cursor: pointer;
@@ -497,6 +500,11 @@ main {
   width: 320px;
   text-align: center;
   background: transparent;
+  transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
 }
 
 .card img {
@@ -510,6 +518,12 @@ main {
   margin-top: 10px;
   color: #fff;
   font-weight: 500;
+}
+
+.home-card {
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .carousel-btn {
@@ -531,6 +545,13 @@ main {
 
 
 /* === TESTIMONIALS === */
+.testimonial-container {
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
 .testimonials {
   background: 
     linear-gradient(to bottom, rgba(199,160,122,0.65), rgba(191,155,118,0.65)),
@@ -540,7 +561,7 @@ main {
   background-position: center;
   background-repeat: no-repeat;
 
-  padding: 10px 100px;
+  padding: 50px 100px;
   text-align: center;
 }
 
@@ -548,25 +569,20 @@ main {
   font-family: 'Playfair Display', serif;
   font-size: 2.8rem;
   font-weight: 600;
-  color: #8D653D;
-  margin-bottom: 20px; 
+  /* color: #8D653D; */
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 10px; 
   font-weight: normal;
   text-align: left;
+  font-style: italic;
 }
 
 .testimonial-list {
   display: flex;
-  gap: 50px;
-  justify-content: center;
-  margin-bottom: 70px;
-}
-
-.testimonial {
-  background: #F5F2ED;
-  padding: 30px;
-  border-radius: 10px;
-  width: 280px;
-  font-style: italic;
+  gap: 20px;
+  transition: transform 0.5s ease;
+  will-change: transform;
+  scroll-behavior: smooth;
 }
 
 .quote-icon {
@@ -732,6 +748,7 @@ footer {
     max-width: 600px;
     padding-top: 10px;
     text-align: center;
+    font-style: italic;
 }
 
 .home-content1{
@@ -771,10 +788,10 @@ footer {
   font-size: 1.4rem;
   color: #E6C068;
   margin-top: 15px;
+  font-style: italic;
 }
 
 .service-item p {
-  font-family: 'Poppins', sans-serif;
   font-size: 1rem;
   color: #E6C068;
   margin-top: 5px;
@@ -808,7 +825,6 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 
 .contact-section {
@@ -915,6 +931,7 @@ body {
     font-size: 32px;
     color: var(--accent-color); 
     margin-bottom: 10px;
+    font-style: italic;
 }
 
 .form-description {
@@ -956,7 +973,6 @@ body {
     padding: 5px 0 5px 15px;
     font-size: 16px;
     color: var(--text-dark);
-    font-family: 'Poppins', sans-serif;
 }
 
 .input-group textarea {
@@ -1022,6 +1038,12 @@ body {
     max-width: 50%;
 }
 
+.detail-image-area img {
+    width: 100%;
+    height: 300px; 
+    object-fit: cover; 
+}
+
 .main-product-image {
     width: 100%;
     height: auto;
@@ -1032,15 +1054,15 @@ body {
 .detail-content {
     flex: 1;
     max-width: 50%;
-    padding-top: 20px; 
 }
 
 .order-title {
     font-family: 'Playfair Display', serif;
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 34px;
+    font-weight: 550;
     margin-bottom: 10px;
     color: var(--dark-bg);
+    font-style: italic;
 }
 
 .order-now-btn {
@@ -1061,6 +1083,25 @@ margin-bottom: 30px;
     color: var(--dark-bg);
 }
 
+.add-to-cart-btn {
+  background-color: #A06F3F; 
+  color: #FFFFFF; 
+  border: none;
+  padding: 10px 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.add-to-cart-btn:hover {
+    background-color: var(--accent-color);
+    color: var(--dark-bg);
+}
+
 .tab-navigation {
     display: flex;
     border-bottom: 1px solid #eee;
@@ -1070,8 +1111,6 @@ margin-bottom: 30px;
 .tab-item {
     padding: 8px 15px;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: 300;
     color: #777;
     margin-right: 20px;
     transition: color 0.3s;
@@ -1081,16 +1120,17 @@ margin-bottom: 30px;
 .tab-item.active {
     color: #A06F3F;
     font-weight: normal;
+    display: inline-block;
 }
 
 .tab-item.active::after {
     content: '';
     position: absolute;
     bottom: -1px;
-    left: 0;
-    width: 100%;
+    left: -5px;
     height: 3px;
     background-color: #A06F3F;
+    width: 100%;
 }
 
 .tab-content {
@@ -1131,18 +1171,6 @@ margin-bottom: 30px;
     color: #E6C068; 
     font-size: 16px;
     margin-bottom: 10px;
-}
-
-@media (max-width: 992px) {
-    .detail-container {
-        flex-direction: column;
-        max-width: 700px;
-        padding: 0 20px;
-    }
-    .detail-image-area,
-    .detail-content {
-        max-width: 100%;
-    }
 }
 
 /* NAVBAR DETAILS */
@@ -1269,6 +1297,7 @@ input[type="radio"] {
     margin-bottom: 5px;
     font-weight: normal;
     text-align: center;
+    font-style: italic;
 }
 
 .form-subtitle {
@@ -1356,10 +1385,6 @@ select option[value=""] {
 background-color: #EBD0B5;
 }
 
-.order-brand {
-    color: #a6a6a6;
-    font-weight: 20;
-}
 .order-title, .order-price {
     color: #A06F3F;
     margin-bottom: 10px;
@@ -1398,10 +1423,11 @@ background-color: #EBD0B5;
     border-bottom: 1px solid #eee;
     margin-bottom: 40px; 
     display: flex;
+    text-align: center;
 }
 
 .tab-item {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 500;
     text-decoration: none;
     color: #aaa; 
@@ -1912,14 +1938,13 @@ a:hover {
 /* CART */
 .cart-section {
   background-color: linear-gradient(to bottom, #fff, #EDE4A875);
-    padding: 80px 0;
-    padding-top: 200px; 
+  padding: 80px 0;
+  padding-top: 200px; 
 }
 
 .cart-container{
   width: 100%;
   display: flex;
-  gap: 50px;
   padding: 0 40px;
   align-items: center;
   flex-direction: column;
@@ -1974,7 +1999,6 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  border: 1px solid #C7A07A;
   border-radius: 20px;
   padding: 5px 10px;
   min-width: 90px;
@@ -2181,7 +2205,7 @@ a:hover {
 /* SIDEBAR */
 .menu-sidebar {
   width: 250px;
-  background: #e6d2bd;
+  background-color: rgba(255, 255, 255, 0.6); 
   padding: 20px;
   border-radius: 5px;
   margin-right: 20px;
@@ -2192,6 +2216,7 @@ a:hover {
   color: #8b5e3c;
   font-family: 'Playfair Display', serif;
   margin-left:10px;
+  font-style: italic;
 }
 
 .menu-list {
@@ -2302,7 +2327,7 @@ a:hover {
 
 .menu-card {
   animation: fadeIn 0.3s ease;
-  background-color: #e6d2bd;
+  background-color: rgba(255, 255, 255, 0.6); 
   padding: 10px;
   border-radius: 5px;
 }
@@ -2468,3 +2493,71 @@ a:hover {
   margin-bottom: 15px;
   color: #8D653D;
 }
+
+.snip1533 {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  color: #9e9e9e;
+  display: inline-block;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 16px;
+  position: relative;
+  text-align: center;
+  min-width: calc((100% - 40px) / 3);
+  background-color: #ffffff;
+  border-radius: 5px;
+  border-top: 5px solid #E6C068;
+  min-width: 25%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;  flex: 0 0 calc((100% - 40px) / 3); /* 3 card per layar */
+  max-width: calc((100% - 40px) / 3);
+  margin: 35px 0 10px;
+}
+
+.snip1533 *,
+.snip1533 *:before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
+}
+
+.snip1533 figcaption {
+  padding: 13% 10% 12%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.snip1533 figcaption:before {
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  color: #E6C068;
+  content: "\f10e";
+  font-family: 'FontAwesome';
+  font-size: 32px;
+  font-style: normal;
+  left: 50%;
+  line-height: 60px;
+  position: absolute;
+  top: -30px;
+  width: 60px;
+  
+}
+
+.snip1533 h3 {
+  color: #8b5e3c;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 24px;
+  margin: auto 0 5px;
+}
+
+.snip1533 blockquote {
+  font-style: italic;
+  font-weight: 300;
+  margin: 0 0 20px;
+}   

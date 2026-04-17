@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminNotificationController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Models\Product;
 
 /// USERS ROUTES
 Route::get('/login', [AuthController::class,'showLogin'])->name('login');
@@ -26,7 +27,8 @@ Route::get('/register', function () {
 Route::post('/register', [AuthController::class,'register'])->name('register');
 
 Route::get('/', function(){
-    return view('welcome');
+    $products = Product::latest()->take(8)->get();; 
+    return view('welcome', compact('products'));
 })->name('welcome')->middleware('auth');
 
 Route::middleware('auth')->group(function () {

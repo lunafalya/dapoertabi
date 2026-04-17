@@ -92,9 +92,9 @@
   <section class="about-section">
   <div class="menu-page">
       <div class="menu-topbar">
-        <span class="menu-sort-label">Urutkan:</span>
+        <span class="menu-sort-label">Sort by:</span>
         <select class="menu-sort-select">
-          <option>Terbaru</option>
+          <option>Latest</option>
         </select>
         <i class="bi bi-chevron-down filter-icon"></i>
       </div>
@@ -124,6 +124,12 @@
             </a>
             <h4 class="menu-name">{{ $product->name }}</h4>
             <p class="menu-price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+            <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="add-to-cart-btn" id="addtocartButton">
+                    Add to Cart
+                </button>
+            </form>
           </div>
           @endforeach
         </div>
@@ -133,6 +139,13 @@
 </div>
   </section>
 
+  <div id="cart-popup" class="cart-popup">
+    <div class="popup-box">
+      <i class="bi bi-check-circle"></i>
+      <p>Product added to cart 🛒</p>
+      <a href="{{ url('/cart') }}" class="view-btn">View Cart</a>
+    </div>
+  </div>
 
   <!-- FOOTER -->
  <footer>

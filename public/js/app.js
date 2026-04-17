@@ -260,12 +260,14 @@ loadSelectedProducts();
 
   if (!button || !popup) return;
 
-  button.addEventListener("click", function () {
+  button.addEventListener("click", function (e) {
+    e.preventDefault();
 
     popup.classList.add("show");
 
     setTimeout(() => {
       popup.classList.remove("show");
+      form.submit();
     }, 2000);
 
   });
@@ -292,3 +294,42 @@ loadSelectedProducts();
       updateTotal();
     });
   });
+
+  // TESTIMONIALS CAROUSEL
+  document.addEventListener("DOMContentLoaded", function () {
+
+  const list = document.querySelector(".testimonial-list");
+  let items = document.querySelectorAll(".snip1533");
+
+  if (!list || items.length === 0) return;
+
+  const visibleItems = 3;
+  let index = 0;
+
+  // 👉 clone semua item (biar infinite smooth)
+  items.forEach(item => {
+    list.appendChild(item.cloneNode(true));
+  });
+
+  items = document.querySelectorAll(".snip1533");
+
+  function slide() {
+    index++;
+
+    const itemWidth = items[0].offsetWidth + 20; // + gap
+    list.style.transition = "transform 0.5s ease";
+    list.style.transform = `translateX(-${index * itemWidth}px)`;
+
+    // 👉 reset TANPA kelihatan loncat
+    if (index >= items.length / 2) {
+      setTimeout(() => {
+        list.style.transition = "none";
+        index = 0;
+        list.style.transform = `translateX(0px)`;
+      }, 500);
+    }
+  }
+
+  setInterval(slide, 2500);
+
+});

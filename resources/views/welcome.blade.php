@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - Dapoer Tabi</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -109,9 +110,9 @@
 
 
       <div class="about-gallery">
-        <div class="item item1"><img src="{{ asset('images/about1.jpg') }}" alt=""></div>
         <div class="item item2"><img src="{{ asset('images/about2.jpg') }}" alt=""></div>
         <div class="item item3"><img src="{{ asset('images/about3.jpg') }}" alt=""></div>
+        <div class="item item1"><img src="{{ asset('images/about1.jpg') }}" alt=""></div>
         <div class="item item4"><img src="{{ asset('images/about4.jpg') }}" alt=""></div>
         <div class="item item5"><img src="{{ asset('images/about5.jpg') }}" alt=""></div>
       </div>
@@ -131,61 +132,82 @@
     </div>
 
     <div class="carousel-container">
+      @if($products->count() > 3)
       <button class="carousel-btn prev">
         <i class="bi bi-chevron-left"></i>
       </button>      
+      @endif
       <div class="carousel">
-        <div class="card">
-          <a href="{{ url('/detail') }}"class="service-link">
-          <img src="{{ asset('images/4.jpg') }}" alt="Putri Salju">
-          <p>Putri Salju</p>
-        </div>
-        <div class="card">
-          <a href="{{ url('/detail') }}"class="service-link">
-          <img src="{{ asset('images/1.jpg') }}" alt="Palm Cheese Cookies">
-          <p>Palm Cheese Cookies</p>
-        </div>
-        <div class="card">
-          <a href="{{ url('/detail') }}"class="service-link">
-          <img src="{{ asset('images/2.jpg') }}" alt="Kastengel">
-          <p>Kastengel  </p>
-        </div>
-        <div class="card">
-          <a href="{{ url('/detail') }}"class="service-link">
-          <img src="{{ asset('images/3.jpg') }}" alt="Oatmeal Cookies">
-          <p>Oatmeal Cookies</p>
-        </div>
-        <div class="card">
-          <a href="{{ url('/detail') }}"class="service-link">
-          <img src="{{ asset('images/5.jpg') }}" alt="Nastar">
-          <p>Nastar</p>
-</a>
-        </div>
+        @foreach ($products as $product)
+          <div class="card">
+            <a href="{{ route('products.show', $product->id) }}"class="service-link">
+              <img src="{{ asset('storage/'.$product->file_path) }}" alt="{{ $product->name }}">
+              <p class="home-card">{{ $product->name }}</p>
+            </a>
+          </div>
+        @endforeach
       </div>
+      @if($products->count() > 3)
       <button class="carousel-btn next">
         <i class="bi bi-chevron-right"></i>
       </button>
+      @endif
     </div>
   </section>
 
   <!-- TESTIMONIALS -->
   <section class="testimonials">
     <h2>What Our Clients Say</h2>
-    <div class="testimonial-list">
-      <div class="testimonial">
-        <img src="{{ asset('images/kutip.png') }}" alt="kutip" class="quote-icon" >
-        <p>“The cookies are perfectly crunchy, with just the right sweetness. The packaging is beautiful, making them ideal for festive hampers!”</p>
-        <span>- Rina, Margahayu</span>
-      </div>
-      <div class="testimonial">
-        <img src="{{ asset('images/kutip.png') }}" alt="kutip" class="quote-icon">
-        <p>“I love the pineapple-filled nastar. The taste is fresh and not overwhelming—my kids can’t get enough of them.”</p>
-        <span>- Andi, Bekasi Jaya</span>
-      </div>
-      <div class="testimonial">
-        <img src="{{ asset('images/kutip.png') }}" alt="kutip" class="quote-icon">
-        <p>“The chocolate cookies melt in your mouth. They taste homemade yet look so elegant.”</p>
-        <span>- Dewi, Margahayu</span>
+    <div class="testimonial-container">
+      <div class="testimonial-list">
+        <figure class="snip1533">
+          <figcaption>
+            <blockquote>
+            <p>These cookies are simply irresistible! The buttery texture melts in your mouth, and I keep coming back for more.</p>
+            </blockquote>
+            <h3>Emily R.</h3>
+          </figcaption>
+        </figure>
+        <figure class="snip1533">
+          <figcaption>
+            <blockquote>
+              <p>I ordered a gift box for my parents, and they loved it. Fresh, crunchy, and beautifully packaged.</p>
+            </blockquote>
+            <h3>Minerva McGonagall</h3>
+          </figcaption>
+        </figure>
+        <figure class="snip1533">
+          <figcaption>
+            <blockquote>
+              <p>Delivery was fast, and the cookies arrived in perfect condition. They taste just like they came straight out of the oven.</p>
+            </blockquote>
+            <h3>Gojo Satoru</h3>
+          </figcaption>
+        </figure>
+        <figure class="snip1533">
+          <figcaption>
+            <blockquote>
+              <p>I’ve tried many brands, but these stand out. Every bite feels premium and full of flavor.</p>
+            </blockquote>
+            <h3>Cho Ko Wie</h3>
+          </figcaption>
+        </figure>
+        <figure class="snip1533">
+          <figcaption>
+            <blockquote>
+              <p>It is not a lack of love, but a lack of friendship that makes unhappy marriages.</p>
+            </blockquote>
+            <h3>Wulandari</h3>
+          </figcaption>
+        </figure>
+        <figure class="snip1533">
+          <figcaption>
+            <blockquote>
+              <p>The variety pack is amazing! Each flavor has its own charm, and none disappoint.</p>
+            </blockquote>
+            <h3>Karina Yoo</h3>
+          </figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -234,5 +256,6 @@
 
 
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 </body>
 </html>

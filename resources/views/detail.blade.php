@@ -86,7 +86,6 @@
         </div>
         
         <div class="detail-content">
-            <p class="order-brand">Dapoer Tabi</p>
             <h1 class="order-title">{{ $product->name }}</h1>
             <h2 class="order-price">Rp {{ number_format($product->price, 0, ',', '.') }}</h2>
             <p class="ratings">
@@ -108,8 +107,8 @@
             </form>
             
             <div class="tab-navigation">
-                <span class="tab-item active" data-tab="description">Description</span>
-                <span class="tab-item" data-tab="review">Review</span>
+                <span class="tab-item active small" data-tab="description">Description</span>
+                <span class="tab-item small" data-tab="review">Review</span>
             </div>
             
             <div class="tab-content active" id="description-content">
@@ -134,13 +133,13 @@
                               @endfor
                           </div>
 
-                          <p class="review-text">
+                          <p class="content-text">
                               "{{ $review->review }}"
                           </p>
                       </div>
                   @endforeach
               @else
-                  <p class="no-review">No reviews yet.</p>
+                  <p class="content-text">No reviews yet.</p>
               @endif
 
           </div>

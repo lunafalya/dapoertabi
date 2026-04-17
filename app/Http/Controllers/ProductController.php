@@ -19,6 +19,12 @@ class ProductController extends Controller
         return view('products', compact('products'));
     }
 
+    public function home()
+    {
+        $products = Product::latest()->take(8)->get(); // buat homepage
+        return view('welcome', compact('products'));
+    }
+
     public function show($id)
 {
     $product = Product::with('reviews.user')->findOrFail($id);
