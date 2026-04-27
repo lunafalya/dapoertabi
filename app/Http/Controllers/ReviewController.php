@@ -22,23 +22,38 @@ class ReviewController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'rating' => 'required|integer|min:1|max:5',
-            'review' => 'required|string'
-        ]);
+{
+    $request->validate([
+        'checkout_id' => 'required|exists:checkouts,id',
+        'rating' => 'required|integer|min:1|max:5',
+        'review' => 'required|string'
+    ]);
 
-        Review::create([
-            'user_id' => Auth::id(),
-            'product_id' => $request->product_id,
-            'rating' => $request->rating,
-            'review' => $request->review,
-        ]);
+    $checkout = Checkout::findOrFail($request->checkout_id);
 
-        return redirect()->route('history')
-            ->with('success', 'Review added!');
+    // pastikan milik user login
+    if (!$checkout->order || $checkout->order->user_id != Auth::id()) {
+        abort(403);
     }
+
+    // cegah duplicate
+    $exists = Review::where('checkout_id', $checkout->id)->exists();
+
+    if ($exists) {
+        return back()->with('error', 'Review already added.');
+    }
+
+    Review::create([
+        'user_id' => Auth::id(),
+        'product_id' => $checkout->product_id,
+        'checkout_id' => $checkout->id,
+        'rating' => $request->rating,
+        'review' => $request->review,
+    ]);
+
+    return redirect()->route('history')
+        ->with('success', 'Review added!');
+}
 
     
 }

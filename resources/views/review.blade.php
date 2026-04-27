@@ -84,7 +84,7 @@
         <form method="POST" action="{{ route('review.store') }}" class="review-form">
         @csrf
 
-        <input type="hidden" name="product_id" value="{{ $checkout->product->id }}">
+        <input type="hidden" name="checkout_id" value="{{ $checkout->id }}">
         <input type="hidden" name="rating" id="ratingValue" value="5">
 
         <!-- RATING -->

@@ -11,58 +11,64 @@ use App\Models\Checkout;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
-        $cart = session()->get('cart', []);
-        $user = auth()->user();
 
-        return view('checkout', compact('cart','user'));
+public function index()
+{
+    $cart = session()->get('cart', []);
+    $user = auth()->user();
+
+    return view('checkout', compact('cart','user'));
+}
+
+public function store(Request $request)
+{
+    $cart = session()->get('cart', []);
+
+    if (empty($cart)) {
+        return back()->with('error', 'Cart kosong');
     }
 
-        public function store(Request $request)
-    {
-        $cart = session()->get('cart', []);
+    $total = 0;
 
-        if (empty($cart)) {
-            return redirect()->back()->with('error', 'Cart kosong');
-        }
+    foreach ($cart as $item) {
+        $total += $item['price'] * $item['qty'];
+    }
 
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['qty'];
-        }
+    // status beda berdasarkan payment
+    $status = $request->payment == 'cashless'
+        ? 'pending_payment'
+        : 'pending';
 
-        $order = Order::create([
-            'user_id' => auth()->id(),
-            'urban_village' => $request->urban_village,
-            'address' => $request->address,
-            'notes' => $request->notes,
-            'payment_method' => $request->payment,
-            'total' => $total,
-            'status' => 'pending'
+    $order = Order::create([
+        'user_id' => auth()->id(),
+        'urban_village' => $request->urban_village,
+        'address' => $request->address,
+        'notes' => $request->notes,
+        'payment_method' => $request->payment,
+        'total' => $total,
+        'status' => $status
+    ]);
+
+    foreach ($cart as $id => $item) {
+        $order->items()->create([
+            'product_id' => $id,
+            'qty' => $item['qty'],
+            'price' => $item['price']
         ]);
-
-        foreach ($cart as $id => $item) {
-            $order->items()->create([
-                'product_id' => $id,
-                'qty' => $item['qty'],
-                'price' => $item['price']
-            ]);
-        }
-
-        // 🔴 JANGAN hapus cart dulu untuk cashless
-        if ($request->payment === 'cashless') {
-            return redirect()->route('payment.process', $order->id);
-        }
-
-        // ✅ cash
-        session()->forget('cart');
-
-        return redirect()
-            ->route('history')
-            ->with('success', 'Pesanan berhasil dibuat. Silakan bayar di tempat.');
     }
 
+    // jika cashless masuk ke halaman payment QR
+    if ($request->payment == 'cashless') {
+        return redirect()->route('payment.show', $order->id);
+    }
+
+    // cash
+    session()->forget('cart');
+
+    return redirect()
+        ->route('history')
+        ->with('success', 'Pesanan berhasil dibuat. Silakan bayar di tempat.');
+}
 //     public function store(Request $request)
 // {
 //     $request->validate([

@@ -145,6 +145,14 @@
     </div>
   </section>
 
+    <div id="cart-popup" class="cart-popup">
+    <div class="popup-box">s
+      <i class="bi bi-check-circle"></i>
+      <p>Product added to cart 🛒</p>
+      <a href="{{ route('cart.index') }}" class="view-btn">View Cart</a>
+    </div>
+  </div>
+
  <footer>
   <div class="footer-content">
     <img src="{{ asset('images/logo-bg.png') }}" alt="Dapoer Tabi Logo">

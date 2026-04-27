@@ -1,40 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Payment</title>
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js"
-            data-client-key="{{ config('services.midtrans.client_key') }}"></script>
-</head>
-<body>
-
 <div class="container text-center">
-    <h3>Payment</h3>
-    <p>Total: Rp {{ number_format($order->total,0,',','.') }}</p>
 
-    <button id="pay-button" class="order-btn">
-        Pay Now
-    </button>
+<h3>Payment QRIS / Gopay</h3>
+
+<p>Total:
+Rp {{ number_format($order->total,0,',','.') }}
+</p>
+
+<img src="{{ asset('images/qrcode.jpeg') }}" width="250">
+
+<form action="{{ route('payment.upload',$order->id) }}"
+method="POST"
+enctype="multipart/form-data">
+
+@csrf
+
+<div class="mt-3">
+<label>Upload Bukti Transfer</label>
+<input type="file" name="proof" required class="form-control">
 </div>
 
-<script src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="{{ config('services.midtrans.client_key') }}">
-</script>
+<button class="btn btn-success mt-3">
+Kirim Bukti Transfer
+</button>
 
-<script>
-document.getElementById('pay-button').addEventListener('click', function () {
-    window.snap.pay('{{ $snapToken }}', {
-        onSuccess: function () {
-            window.location.href = "{{ route('history') }}";
-        },
-        onPending: function () {
-            alert('Menunggu pembayaran');
-        },
-        onError: function () {
-            alert('Pembayaran gagal');
-        }
-    });
-});
-</script>
+</form>
 
-</body>
-</html>
+</div>

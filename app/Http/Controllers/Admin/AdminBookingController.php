@@ -35,4 +35,13 @@ class AdminBookingController extends Controller
 
     return back()->with('success', 'Booking marked as done.');
 }
+
+public function reject($id)
+{
+    $booking = Order::findOrFail($id);
+    $booking->update(['status' => 'failed']);
+
+    return back()->with('error', 'Payment rejected');
+}
+
 }

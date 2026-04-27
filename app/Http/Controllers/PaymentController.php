@@ -10,6 +10,27 @@ use App\Models\Order;
 class PaymentController extends Controller
 {
 
+public function show(Order $order)
+{
+   return view('payment',compact('order'));
+}
+
+public function upload(Request $request, Order $order)
+{
+   $request->validate([
+      'proof'=>'required|image|mimes:jpg,jpeg,png|max:5000'
+   ]);
+
+   $file = $request->file('proof')->store('proofs', 'public');
+
+$order->update([
+    'payment_proof' => $file,
+    'status' => 'pending_verification'
+]);
+
+   return redirect()->route('history')
+   ->with('success','Bukti transfer dikirim');
+}
 public function __construct()
     {
         Config::$serverKey = config('services.midtrans.server_key');
@@ -88,26 +109,4 @@ public function __construct()
 
         return response()->json(['status' => 'ok']);
     }
-// public function pay(Order $order)
-// {
-//     Config::$serverKey = config('services.midtrans.server_key');
-//     Config::$isProduction = false;
-//     Config::$isSanitized = true;
-//     Config::$is3ds = true;
-
-//     $params = [
-//         'transaction_details' => [
-//             'order_id' => 'ORDER-' . $order->id,
-//             'gross_amount' => $order->total,
-//         ],
-//         'customer_details' => [
-//             'first_name' => $order->user->name,
-//             'email' => $order->user->email,
-//         ],
-//     ];
-
-//     $snapToken = Snap::getSnapToken($params);
-
-//     return view('payment.pay', compact('snapToken', 'order'));
-// }
 }

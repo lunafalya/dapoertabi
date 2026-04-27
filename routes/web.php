@@ -55,6 +55,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/payment/{order}', [PaymentController::class, 'process'])
         ->name('payment.process');
 
+    Route::get('/payment/{order}', [PaymentController::class,'show'])->name('payment.show');
+
+    Route::post('/payment/{order}/upload', [PaymentController::class,'upload'])->name('payment.upload');
+
     Route::post('/payment/callback', [PaymentController::class, 'callback'])
         ->name('payment.callback');
 
@@ -101,6 +105,9 @@ Route::middleware(['auth','admin'])->group(function () {
 
     Route::post('/admin/booking/{order}/done', [AdminBookingController::class, 'done']
         )->name('admin.booking.done');
+
+        Route::post('/admin/booking/{order}/reject', [AdminBookingController::class, 'reject']
+        )->name('admin.booking.reject');
 
     Route::get('/admin/messages', function () { return view('admin.message'); })->name('admin.messages');
     Route::get('/admin/notifications', [AdminNotificationController::class, 'index'])->name('admin.notifications');

@@ -33,10 +33,11 @@ protected $table = 'checkouts'; // karena bukan plural
     }
 
     public function review()
-{
-    return $this->hasOne(Review::class, 'product_id', 'product_id')
-        ->where('user_id', auth()->id());
-}
+    {
+        return $this->hasOne(Review::class, 'checkout_id', 'id');
+    }
+
+
 
 }
 

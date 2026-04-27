@@ -16,9 +16,19 @@
     </td>
     <td>
         @if ($booking->status == 'pending')
-            <span class="status-badge badge-pending">Pending</span>
+        <span class="status-badge badge-pending">Pending</span>
+
+        @elseif ($booking->status == 'pending_payment')
+        <span class="status-badge badge-pending">Waiting Payment</span>
+
+        @elseif ($booking->status == 'pending_verification')
+        <span class="status-badge badge-warning">Waiting Verification</span>
+
         @elseif ($booking->status == 'done')
-            <span class="status-badge badge-completed">Completed</span>
+        <span class="status-badge badge-completed">Completed</span>
+
+        @elseif ($booking->status == 'failed')
+        <span class="status-badge badge-danger">Rejected</span>
         @else
             <span class="status-badge bg-secondary text-white">{{ ucfirst($booking->status) }}</span>
         @endif

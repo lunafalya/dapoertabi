@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Review extends Model
 {
    protected $fillable = [
-        'id',
         'user_id',
         'product_id',
+        'checkout_id',
         'rating',
         'review'
     ];
@@ -27,5 +27,8 @@ class Review extends Model
         return $this->belongsTo(Product::class);
     }
 
-    
+    public function checkout()
+    {
+        return $this->belongsTo(Checkout::class);
+    }
 }

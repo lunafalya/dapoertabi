@@ -276,8 +276,29 @@
                     </div>
 
                 </div>
+                <div class="detail-row">
+                    <span class="detail-label">Payment Method</span>
+                    <span class="detail-value">{{ $booking->payment_method }}</span>
+                </div>
+
+                @if(strtolower($booking->payment_method) == 'cashless')
+                <div class="detail-row">
+                    <span class="detail-label">Payment Proof</span>
+                    <span class="detail-value">
+
+                        @if($booking->payment_proof)
+                            <a href="{{ asset('storage/' . $booking->payment_proof) }}" target="_blank">
+                                <img src="{{ asset('storage/' . $booking->payment_proof) }}"
+                                    style="width:120px; border-radius:10px; border:1px solid #ddd;">
+                            </a>
+                        @else
+                            <span class="text-muted">No proof uploaded</span>
+                        @endif
+
+                    </span>
+                </div>
+                @endif
                 <div class="modal-footer border-0 pt-0 justify-content-center">
-                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
                 @if(
                         $booking->status === 'pending'
                         && strtolower($booking->payment_method) === 'cash'
@@ -291,6 +312,32 @@
                             </button>
                         </form>
                     @endif
+
+                    
+                    @if($booking->payment_method == 'cashless')
+
+                        @if($booking->status == 'pending_verification')
+
+                            <form action="{{ route('admin.booking.done',$booking->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button class="btn btn-success">
+                                Approve Payment
+                            </button>
+                            </form>
+
+                            <form action="{{ route('admin.booking.reject',$booking->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button class="btn btn-danger">
+                                Reject
+                            </button>
+                            </form>
+
+                        @endif
+
+                    @endif
+
+
+                    
                 </div>
             </div>
         </div>
