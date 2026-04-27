@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -19,6 +20,31 @@ public function index()
 {
     $user = Auth::user();
 
+    $year = now()->year;
+
+    // Ambil order selesai (atau pending+done sesuai kebutuhanmu)
+    $monthlyOrders = Order::select(
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(*) as total_orders')
+        )
+        ->whereYear('created_at', $year)
+        ->groupBy(DB::raw('MONTH(created_at)'))
+        ->pluck('total_orders', 'month');
+
+    $monthlyRevenue = Order::with('items')
+        ->whereYear('created_at', $year)
+        ->get()
+        ->groupBy(function ($order) {
+            return $order->created_at->month;
+        })
+        ->map(function ($orders) {
+            return $orders->sum(function ($order) {
+                return $order->items->sum(function ($item) {
+                    return $item->price * $item->qty;
+                });
+            });
+        });
+        
     // Recent Orders
     $bookings = Order::with(['user', 'items.product'])
         ->orderBy('created_at', 'desc')
@@ -27,6 +53,15 @@ public function index()
 
     // Total order
     $totalOrders = $bookings->count();
+    $labels = [];
+    $orderData = [];
+    $revenueData = [];
+
+    for ($m = 1; $m <= 12; $m++) {
+        $labels[] = Carbon::create()->month($m)->format('M');
+        $orderData[] = $monthlyOrders[$m] ?? 0;
+        $revenueData[] = (int) ($monthlyRevenue[$m] ?? 0);
+    }
 
     // Total income
     $totalUang = 0;
@@ -72,7 +107,10 @@ public function index()
         'bookings',
         'totalOrders',
         'totalUang',
-        'notifications'
+        'notifications',
+        'labels',
+        'orderData',
+        'revenueData'
     ));
 }
 }

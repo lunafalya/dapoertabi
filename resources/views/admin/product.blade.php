@@ -6,86 +6,114 @@
 @section('content')
 
 <style>
-    /* Page Specific Styles */
+    /* Typography & Titles */
     .services-header-title {
-        color: #A67C52; /* Golden/Brownish text to match the mockup */
-        font-family: 'Abhaya Libre', serif;
+        color: #5C4334; /* Primary Brown */
+        font-family: 'Playfair Display', 'Times New Roman', serif !important;
         font-weight: 700;
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 
+    /* Modern Pill Button */
     .btn-add-custom {
-        background-color: #9E7B5A;
+        background-color: #5C4334;
         color: #FFFFFF;
-        border-radius: 8px;
-        padding: 8px 24px;
+        border-radius: 50px; /* Pill shape to match other pages */
+        padding: 10px 28px;
         border: none;
         font-weight: 600;
-        transition: background-color 0.2s;
+        font-family: system-ui, -apple-system, sans-serif;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 12px rgba(92, 67, 52, 0.1);
     }
 
     .btn-add-custom:hover {
-        background-color: #7A5B40;
+        background-color: #8B6A4B;
         color: #FFFFFF;
+        transform: translateY(-1px);
     }
 
     /* Product Card Styling */
     .product-card {
         background-color: #FFFCF8;
-        border-radius: 12px;
+        border-radius: 16px; /* Increased for a more modern feel */
         overflow: hidden;
-        border: none;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        border: 1px solid #F0EAE1;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         height: 100%;
         display: flex;
         flex-direction: column;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.06);
     }
 
     .product-card img {
         width: 100%;
-        height: 180px;
+        height: 200px;
         object-fit: cover;
+        border-bottom: 1px solid #F0EAE1;
     }
 
     .product-card-body {
-        padding: 16px 20px;
+        padding: 20px;
         display: flex;
         flex-direction: column;
         flex-grow: 1;
+        font-family: system-ui, -apple-system, sans-serif;
     }
 
     .product-title {
+        font-family: 'Playfair Display', serif;
         color: #5C4334;
         font-weight: 700;
-        font-size: 1.1rem;
-        margin-bottom: 2px;
+        font-size: 1.25rem;
+        margin-bottom: 6px;
     }
 
     .product-price {
-        color: #A69485;
-        font-size: 0.85rem;
+        color: #8B6A4B; /* Using the mid-brown accent */
+        font-size: 0.95rem;
         font-weight: 600;
         margin-bottom: 20px;
     }
 
+    /* Action Buttons (Icons) */
     .product-actions {
         display: flex;
         justify-content: flex-end;
-        gap: 12px;
-        margin-top: auto; /* Pushes the icons to the bottom */
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 15px;
+        border-top: 1px dashed #EADFC8;
     }
 
     .action-btn {
-        background: none;
+        background-color: #F8F5F0;
         border: none;
-        color: #694F3C;
-        font-size: 1.15rem;
-        padding: 0;
-        transition: color 0.2s;
+        color: #5C4334;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        font-size: 1rem;
     }
 
     .action-btn:hover {
-        color: #A67C52;
+        background-color: #EADFC8;
+        color: #5C4334;
+    }
+    
+    /* Specific styling for delete icon hover */
+    form .action-btn:hover {
+        background-color: #FFF0F0;
+        color: #D32F2F;
     }
 </style>
 

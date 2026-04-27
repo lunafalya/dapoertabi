@@ -42,7 +42,10 @@
 
     <a href="{{ url('/cart') }}">
       <i class="bi bi-bag cart-icon"></i>
-      <span class="cart-count">0</span>
+      
+        <span class="cart-count">
+          {{ array_sum(array_column(session('cart', []), 'qty')) }}
+        </span>
     </a>
 
     <div class="dropdown">
@@ -66,7 +69,7 @@
   </div> 
   <svg class="wave-nav" xmlns="http://www.w3.org/2000/svg" 
        viewBox="0 0 1440 320" preserveAspectRatio="none">
-       <defs>
+       <defs>s
           <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" style="stop-color:#BF9B76; stop-opacity:1" />
             <stop offset="100%" style="stop-color:#EBD0B5; stop-opacity:1" />

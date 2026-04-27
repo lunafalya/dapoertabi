@@ -9,15 +9,13 @@
       <li><a href="{{ url('/landing') }}" class="{{ request()->is('landing') ? 'active' : '' }}">Home</a></li>
       <li><a href="{{ url('/aboutus') }}" class="{{ request()->is('aboutus') ? 'active' : '' }}">About Us</a></li>
       <li><a href="{{ url('/services') }}" class="{{ request()->is('services') ? 'active' : '' }}">Services</a></li>
-      <li><a href="{{ route('home.contactus') }}" class="{{ request()->routeIs('home.contactus') ? 'active' : '' }}">
+      <li><a href="{{ route('contactus') }}" class="{{ request()->routeIs('home.contactus') ? 'active' : '' }}">
      Contact Us
   </a>
 </li>
     </ul>
   </nav>
   <div class="nav-icons">
-    <!-- <img src="{{ asset('images/searchlogo.png') }}" alt="searchlogo" class="search-icon"> -->
-
     <div class="dropdown">
       <img src="{{ asset('images/profilelogo.png') }}" alt="profilelogo" class="profile-icon" id="profileBtn" >
 

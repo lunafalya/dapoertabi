@@ -34,7 +34,7 @@ class ProfileController extends Controller
             'name' => 'required|string',
             'email' => 'required|email',
             'phone' => 'required|string',
-            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000'
         ]);
 
         // Update data dasar

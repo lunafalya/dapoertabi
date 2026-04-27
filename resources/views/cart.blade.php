@@ -80,7 +80,6 @@
         @foreach($cart as $id => $item)
         <div class="cart-item">
 
-
             <img src="{{ asset('storage/'.$item['image']) }}" class="cart-img">
 
             <div class="cart-name">{{ $item['name'] }}</div>
@@ -89,11 +88,12 @@
                 Rp. {{ number_format($item['price'],0,',','.') }}
             </div>
 
-            <div class="qty-box">
-                <button class="qty-btn minus">-</button>
+            <form action="{{ route('cart.update', $id) }}" method="POST" class="qty-box">
+                @csrf
+                <button name="qty" value="{{ $item['qty'] - 1 }}" class="qty-btn">-</button>
                 <span class="qty-value">{{ $item['qty'] }}</span>
-                <button class="qty-btn plus">+</button>
-            </div>
+                <button name="qty" value="{{ $item['qty'] + 1 }}" class="qty-btn">+</button>
+            </form>
 
             <div class="cart-total">
                 Rp. {{ number_format($item['price'] * $item['qty'],0,',','.') }}
@@ -122,7 +122,7 @@
           <div>Rp {{ number_format($total,0,',','.') }}</div>
       </div>
 
-    <a href="{{ url('/checkout') }}">
+    <a href="{{ route('checkout.store') }}">
     <button class="order-btn">Proceed to Checkout</button>
     </a>
   </section>

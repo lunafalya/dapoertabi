@@ -2,143 +2,239 @@
 @section('content')
 
 <style>
-    /* Card Container */
-    .notification-card {
-        background-color: #FFFCF8;
-        border-radius: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-        border: none;
+    /* Main Container */
+    .notification-wrapper {
+        background-color: #FFFFFF;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        padding: 30px;
+        min-height: 75vh;
     }
 
     /* Typography */
     .page-title {
-        font-family: 'Abhaya Libre', serif;
+        font-family: 'Playfair Display', 'Times New Roman', serif;
         color: #5C4334;
         font-weight: 700;
-        letter-spacing: 1px;
+        margin-bottom: 0;
     }
 
-    .text-brown { color: #694F3C; }
+    .system-font {
+        font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .text-brown { color: #5C4334; }
     .text-light-brown { color: #A69485; }
 
-    /* Pill-shaped Date Pickers */
+    /* Modern Date Pickers */
+    .filter-container {
+        display: flex;
+        gap: 12px;
+    }
+    
     .date-picker-pill {
-        border: 1px solid #A69485;
-        border-radius: 50px;
-        background: transparent;
-        padding: 4px 16px;
+        border: 1px solid #EADFC8;
+        border-radius: 8px; 
+        background: #FDFBF7;
+        padding: 8px 16px;
         display: flex;
         align-items: center;
-        width: 160px;
+        width: 170px;
+        transition: border-color 0.2s;
     }
+    .date-picker-pill:focus-within { border-color: #8B6A4B; }
     
     .date-picker-pill input {
         border: none;
         background: transparent;
         outline: none;
         width: 100%;
-        color: #694F3C;
+        color: #5C4334;
         font-size: 0.85rem;
-        font-weight: 600;
+        font-weight: 500;
+        font-family: system-ui, -apple-system, sans-serif;
     }
     
-    .date-picker-pill input::placeholder { color: #A69485; font-weight: 500; }
-    .date-picker-pill i { color: #8B6A4B; cursor: pointer; }
+    .date-picker-pill input::placeholder { color: #A69485; font-weight: 400; }
+    .date-picker-pill i { color: #A69485; cursor: pointer; transition: color 0.2s; }
+    .date-picker-pill:hover i { color: #5C4334; }
 
-    /* Table Styling */
-    .table-custom {
-        --bs-table-bg: transparent;
-        margin-bottom: 0;
+    /* Notification Flex Rows */
+    .notif-row {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        background-color: #FDFBF7;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        border: 1px solid #F0EAE1;
+        transition: all 0.3s ease;
     }
-    .table-custom tbody tr td {
-        border-bottom: none; /* Removed standard borders */
-        padding: 16px 8px;
-        vertical-align: middle;
+    
+    .notif-row:hover {
+        background-color: #FFFCF8;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        transform: translateY(-1px);
     }
 
-    /* Mark as Read Buttons */
+    /* Unread vs Read States */
+    .unread-notif {
+        border-left: 4px solid #5C4334; 
+        background-color: #FFFCF8;
+    }
+    .read-notif {
+        border-left: 4px solid transparent;
+        opacity: 0.75; 
+    }
+
+    .notif-icon-wrapper {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-right: 20px;
+    }
+    
+    .unread-notif .notif-icon-wrapper { background-color: #EADFC8; color: #5C4334; }
+    .read-notif .notif-icon-wrapper { background-color: #F0EAE1; color: #A69485; }
+
+    /* Interactive Buttons */
     .btn-mark-read {
         border-radius: 50px;
-        padding: 6px 20px;
+        padding: 6px 18px;
         font-size: 0.8rem;
         font-weight: 600;
         border: none;
-        color: #FFFFFF;
-        width: 120px;
-        transition: opacity 0.2s;
+        width: 130px;
+        transition: all 0.2s;
+        font-family: system-ui, -apple-system, sans-serif;
     }
-    .btn-mark-read:hover { opacity: 0.9; color: #FFFFFF; }
+    .btn-mark-read:active { transform: scale(0.95); }
     
-    .btn-read { background-color: #DBC5A0; } /* Lighter tan for read items */
-    .btn-unread { background-color: #8B6A4B; } /* Dark brown for unread items */
+    .btn-unread { background-color: #5C4334; color: #FFFFFF; }
+    .btn-unread:hover { background-color: #8B6A4B; }
     
+    .btn-read { background-color: #EFEBE1; color: #A69485; pointer-events: none; } 
+
+    .filtering-overlay { opacity: 0.4; pointer-events: none; }
 </style>
 
-<div class="notification-card p-5 mb-4">
-    
-    <h2 class="page-title mb-4">NOTIFICATION</h2>
-    
-    <div class="d-flex align-items-center gap-3 mb-4">
+<div class="col-12">
+    <div class="notification-wrapper">
         
-        <div class="date-picker-pill" id="startDateWrapper">
-            <input type="text" id="startDatePicker" placeholder="mm / dd / yy" data-input>
-            <i class="far fa-calendar-alt" data-toggle></i>
+        <div class="d-flex justify-content-between align-items-end mb-4 pb-3" style="border-bottom: 2px solid #F8F5F0;">
+            <div>
+                <h2 class="page-title">Notifications</h2>
+                <p class="text-light-brown system-font mb-0 mt-1" style="font-size: 0.9rem;">Stay updated with your latest alerts.</p>
+            </div>
+            
+            <div class="filter-container">
+                <div class="date-picker-pill" id="startDateWrapper">
+                    <input type="text" id="startDatePicker" placeholder="Start Date" data-input>
+                    <i class="far fa-calendar-alt" data-toggle></i>
+                </div>
+                <div class="date-picker-pill" id="endDateWrapper">
+                    <input type="text" id="endDatePicker" placeholder="End Date" data-input>
+                    <i class="far fa-calendar-alt" data-toggle></i>
+                </div>
+            </div>
         </div>
         
-    </div>
-    
-    <div style="height: 1px; background-color: #F0EAE1; margin-bottom: 1rem;"></div>
-    
-    <div class="table-responsive">
-        <table class="table table-custom">
-            <tbody>
-                @forelse ($notifications as $index => $notification)
-                    <tr>
-                        <td class="fw-bold text-brown text-center" style="width: 40px; font-size: 1.1rem;">
-                            {{ $index + 1 }}
-                        </td>
+        <div id="notificationsList" class="system-font">
+    @forelse ($notifications as $notif)
+        <div class="notif-row">
 
-                        <td class="text-brown fw-medium">
-                            <i class="{{ $notification['icon'] }} me-3" style="font-size: 1.1rem; color: #8B6A4B;"></i>
-                            {{ $notification['message'] }}
-                        </td>
+            <div class="notif-icon-wrapper">
+                <i class="{{ $notif['icon'] }} fs-5"></i>
+            </div>
 
-                        <td class="text-light-brown text-end pe-4" style="font-size: 0.9rem; width: 140px;">
-                            {{ $notification['time'] }}
-                        </td>
-                    
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="text-center text-light-brown py-5">
-                            No notifications yet.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+            <div class="flex-grow-1 pe-4">
+                <h6 class="text-brown mb-1 fw-normal">
+                    {{ $notif['message'] }}
+                </h6>
+                <small class="text-light-brown fw-medium">
+                    <i class="far fa-clock me-1"></i>{{ $notif['time'] }}
+                </small>
+            </div>
+
+        </div>
+    @empty
+        <div class="text-center text-light-brown py-5 mt-4">
+            <i class="far fa-bell-slash fs-1 mb-3 opacity-50"></i>
+            <h5>All caught up!</h5>
+            <p>You have no notifications.</p>
+        </div>
+    @endforelse
+</div>
+
     </div>
 </div>
 
-@endsection
-
-@section('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Initialize Start Date
-        flatpickr("#startDateWrapper", { 
-            dateFormat: "m / d / y",
-            wrap: true, 
-            disableMobile: true
-        });
+    // 1. Mark As Read Functionality
+    function markAsRead(id, buttonElement) {
+        buttonElement.classList.remove('btn-unread');
+        buttonElement.classList.add('btn-read');
+        buttonElement.innerText = 'Read ✓';
         
-        // Initialize End Date
-        flatpickr("#endDateWrapper", { 
-            dateFormat: "m / d / y",
-            wrap: true, 
-            disableMobile: true
-        });
+        const notifRow = document.getElementById('notif-' + id);
+        if(notifRow) {
+            notifRow.classList.remove('unread-notif');
+            notifRow.classList.add('read-notif');
+            
+            const messageText = notifRow.querySelector('h6');
+            if(messageText) {
+                messageText.classList.remove('fw-bold');
+                messageText.classList.add('fw-normal');
+            }
+        }
+    }
+
+    // 2. Calendar Initialization
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        const simulateFilter = function(selectedDates, dateStr, instance) {
+            if(dateStr) {
+                const list = document.getElementById('notificationsList');
+                list.classList.add('filtering-overlay'); 
+                
+                setTimeout(() => {
+                    list.classList.remove('filtering-overlay');
+                }, 500);
+            }
+        };
+
+        // Flatpickr setup
+        if (typeof flatpickr !== 'undefined') {
+            flatpickr("#startDateWrapper", { 
+                dateFormat: "M j, Y", 
+                wrap: true, 
+                disableMobile: true,
+                onChange: simulateFilter 
+            });
+            
+            flatpickr("#endDateWrapper", { 
+                dateFormat: "M j, Y",
+                wrap: true, 
+                disableMobile: true,
+                onChange: simulateFilter
+            });
+        } else {
+            console.error("Flatpickr library is not loaded!");
+        }
     });
 </script>
+
+
+
+
+
+
+
+
+
 @endsection
     

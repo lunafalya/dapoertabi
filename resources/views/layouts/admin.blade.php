@@ -11,29 +11,30 @@
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="icon" href="img/core-img/logo.jpg">
     
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
     <style>
-        /* Figma Layout Variables */
+        /* Updated Figma Layout Variables */
         :root {
-            --bg-main: #C7A07A33; /* <-- Updated background color here */
-            --card-white: #FFFCF8;
-            --text-brown: #5C4334;
+            --bg-main: #FDFBF7; /* Cleaner background for the new layout */
+            --card-white: #FFFFFF;
+            --text-brown: #3E2723; /* Darker brown for active state */
             --text-muted: #A69485;
             --nav-active-bg: #F0EAE1;
             --nav-hover-bg: #F8F5F0;
             --btn-brown: #8B6A4B;
+            --border-color: #EADFC8;
         }
 
-        /* Override Body to act as the dark background container */
+        /* 1. Flush Body (No padding, no floating) */
         body {
-            background-color: var(--bg-main); /* <-- Apply the updated variable here */
+            background-color: var(--bg-main);
             margin: 0;
-            padding: 20px;
+            padding: 0;
             height: 100vh;
             overflow: hidden;
             font-family: system-ui, -apple-system, sans-serif;
@@ -46,27 +47,39 @@
         /* App Wrapper */
         .app-wrapper {
             display: flex;
-            gap: 20px;
             height: 100%;
         }
 
-        /* Floating Sidebar */
+        /* 2. Flush Sidebar (Full height, straight edges) */
         .sidebar-card {
             background-color: var(--card-white);
-            border-radius: 20px;
             width: 260px;
             display: flex;
             flex-direction: column;
-            padding: 30px 20px;
+            border-right: 1px solid var(--border-color);
             flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
+
+        .sidebar-logo {
+            padding: 30px 20px 20px;
+            text-align: center;
+        }
+
+        /* 3. Scrollable Navigation Area */
+        .nav-scroll-area {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 0 15px;
+        }
+
+        .nav-scroll-area::-webkit-scrollbar { width: 4px; }
+        .nav-scroll-area::-webkit-scrollbar-thumb { background: #EADFC8; border-radius: 10px; }
 
         /* Navigation Links */
         .nav-link-custom {
-            color: var(--text-brown);
+            color: var(--text-muted);
             padding: 12px 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             font-weight: 500;
@@ -80,33 +93,41 @@
             color: var(--text-brown);
         }
 
+        /* 4. Updated Active State (Darker brown, left border line) */
         .nav-link-custom.active {
             background-color: var(--nav-active-bg);
+            color: var(--text-brown);
             font-weight: 600;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            border-left: 4px solid var(--btn-brown);
+            border-radius: 0 8px 8px 0;
         }
 
-        .nav-link-custom i {
-            width: 24px; /* Ensure icons align perfectly */
+        .nav-link-custom i { width: 24px; }
+
+        /* 5. Fixed Account Center Footer */
+        .sidebar-footer {
+            padding: 20px 15px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--card-white);
+            text-align: center;
         }
 
-        /* Right Side Layout (Header + Content) */
+        /* Right Side Layout */
         .right-wrapper {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 20px;
             overflow: hidden;
         }
 
-        /* Floating Header */
+        /* 6. Flush Header (Sticks to top) */
         .header-card {
             background-color: var(--card-white);
-            border-radius: 20px;
-            padding: 12px 24px;
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--border-color);
             flex-shrink: 0;
         }
 
@@ -117,28 +138,19 @@
             color: var(--text-brown);
         }
         
-        .search-input::placeholder {
-            color: var(--text-muted);
-        }
+        .search-input::placeholder { color: var(--text-muted); }
 
         /* Main Content Area */
         .content-scroll-area {
             flex-grow: 1;
             overflow-y: auto;
-            padding-right: 5px; /* space for scrollbar */
+            padding: 30px; 
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #5C4334;
-            border-radius: 10px;
-        }
+        /* Custom Scrollbar for Main Content */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #DBC5A0; border-radius: 10px; }
     </style>
 </head>
 
@@ -146,11 +158,11 @@
     <div class="app-wrapper">
         
         <aside class="sidebar-card">
-            <div class="text-center mb-5">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="max-height: 180px; object-fit: contain;">
+            <div class="sidebar-logo">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" style="max-height: 120px; object-fit: contain;">
             </div>
 
-            <div class="flex-grow-1">
+            <div class="nav-scroll-area">
                 <ul class="list-unstyled">
                     <li>
                         <a href="{{ route('admin.dashboard') }}" class="nav-link-custom {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}">
@@ -180,9 +192,9 @@
                 </ul>
             </div>
 
-            <div class="mt-auto pt-3 text-center">
-                <h6 class="serif-font fw-bold" style="color: var(--text-brown);">Account Center</h6>
-                <div class="d-flex align-items-center justify-content-center gap-2 mt-3">
+            <div class="sidebar-footer">
+                <h6 class="serif-font fw-medium mb-3" style="color: var(--text-brown);">Account Center</h6>
+                <div class="d-flex align-items-center justify-content-center gap-2">
                     @if($user && $user->profile_photo)
                         <img src="{{ asset('storage/' . $user->profile_photo) }}" width="45" height="45" class="rounded-circle shadow-sm" style="object-fit:cover;">
                     @else
@@ -201,7 +213,7 @@
 
         <div class="right-wrapper">
             
-            <header class="header-card shadow-sm">
+            <header class="header-card">
                 <div class="d-flex align-items-center">
                     <i class="fas fa-search me-2 fs-5" style="color: var(--text-muted);"></i> 
                     <input type="text" placeholder="Search" class="search-input">
@@ -224,7 +236,7 @@
                         <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm rounded-3 mt-2" aria-labelledby="profileDropdown">
                             <li class="dropdown-header d-flex align-items-center mb-1">
                                 <div>
-                                    <span class="fw-bold d-block text-dark">{{ $user->name ?? 'Admin' }}</span>
+                                    <span class="fw-medium d-block text-dark">{{ $user->name ?? 'Admin' }}</span>
                                     <small class="text-muted">{{ ucfirst($user->role ?? 'Administrator') }}</small>
                                 </div>
                             </li>
@@ -256,6 +268,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    @yield('scripts')
 </body>
 </html>

@@ -24,10 +24,10 @@ public function index()
                 ->implode(', ');
 
             return [
+                'id' => 'order-' . $order->id,
                 'icon' => 'fas fa-box',
                 'message' => 'Order baru masuk: ' . $productNames,
                 'time' => $order->created_at->diffForHumans(),
-                'is_read' => false,
                 'created_at' => $order->created_at,
             ];
         });
@@ -43,10 +43,10 @@ public function index()
                 ->implode(', ');
 
             return [
+                'id' => 'order-done-' . $order->id,
                 'icon' => 'far fa-file-alt',
                 'message' => 'Order dikonfirmasi: ' . $productNames,
                 'time' => $order->updated_at->diffForHumans(),
-                'is_read' => false,
                 'created_at' => $order->updated_at,
             ];
         });
@@ -57,10 +57,10 @@ public function index()
         ->get()
         ->map(function ($review) {
             return [
+                'id' => 'review-' . $review->id,
                 'icon' => 'far fa-comment',
                 'message' => 'Review ' . $review->rating . '★ untuk "' . $review->product->name . '"',
                 'time' => $review->created_at->diffForHumans(),
-                'is_read' => false,
                 'created_at' => $review->created_at,
             ];
         });

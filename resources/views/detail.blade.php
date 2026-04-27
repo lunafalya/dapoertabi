@@ -92,16 +92,10 @@
               ⭐{{ number_format($product->reviews->avg('rating'), 1) }}/5
               ({{ $product->reviews->count() }} reviews)
             </p>
-
-            <div class="qty-box1">
-                <button class="qty-btn minus">-</button>
-                <span class="qty-value1">2</span>
-                <button class="qty-btn plus">+</button>
-            </div>
             
-            <form action="{{ route('cart.add', $product->id) }}" method="POST" id="addToCartForm">
+            <form action="{{ route('cart.add', $product->id) }}" method="POST">
                 @csrf
-                <button type="submit" class="order-now-btn" id="addtocartButton">
+                <button type="submit" class="add-to-cart-btn" id="addtocartButton{{ $product->id }}">
                     Add to Cart
                 </button>
             </form>

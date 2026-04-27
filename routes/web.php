@@ -13,6 +13,8 @@ use App\Http\Controllers\Admin\AdminBookingController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminNotificationController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\MidtransCallbackController;
 use App\Models\Product;
 
 /// USERS ROUTES
@@ -43,10 +45,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class,'index'])->name('cart.index');
     Route::post('/cart/add/{id}', [CartController::class,'add'])->name('cart.add');
     Route::post('/cart/remove/{id}', [CartController::class,'remove'])->name('cart.remove');
+    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    
 
     Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
     Route::get('/checkout', [OrderController::class, 'index'])->name('checkout.index');
     Route::get('/checkout/success', [OrderController::class, 'success'])->name('checkout.success');
+
+    Route::get('/payment/{order}', [PaymentController::class, 'process'])
+        ->name('payment.process');
+
+    Route::post('/payment/callback', [PaymentController::class, 'callback'])
+        ->name('payment.callback');
+
+    Route::post('/midtrans/callback', [MidtransCallbackController::class, 'handle']);
 
     Route::get('/history', [ProfileController::class, 'index'])->name('history');
 

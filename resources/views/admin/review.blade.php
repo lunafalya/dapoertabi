@@ -190,10 +190,6 @@
                         </div>
                     </div>
 
-                    <div class="d-flex gap-2 ms-3">
-                        <button class="btn-pill btn-detail">Detail</button>
-                    </div>
-
                 </div>
             @endforeach
         </div>

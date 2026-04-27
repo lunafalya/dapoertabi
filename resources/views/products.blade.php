@@ -126,7 +126,7 @@
             <p class="menu-price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
             <form action="{{ route('cart.add', $product->id) }}" method="POST">
                 @csrf
-                <button type="submit" class="add-to-cart-btn" id="addtocartButton">
+                <button type="submit" class="add-to-cart-btn" id="addtocartButton{{ $product->id }}">
                     Add to Cart
                 </button>
             </form>
@@ -143,7 +143,7 @@
     <div class="popup-box">
       <i class="bi bi-check-circle"></i>
       <p>Product added to cart 🛒</p>
-      <a href="{{ url('/cart') }}" class="view-btn">View Cart</a>
+      <a href="{{ route('cart.index') }}" class="view-btn">View Cart</a>
     </div>
   </div>
 

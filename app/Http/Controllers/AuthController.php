@@ -66,7 +66,6 @@ class AuthController extends Controller
             'email' => 'Email atau password salah',
         ]);
     }
-
     
     public function logout(Request $request)
     {

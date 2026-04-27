@@ -18,26 +18,29 @@ class CartController extends Controller
     }
 
     public function add($id)
-    {
-        $product = Product::findOrFail($id);
+{
+    $product = Product::findOrFail($id);
 
-        $cart = session()->get('cart', []);
+    $cart = session()->get('cart', []);
 
-        if(isset($cart[$id])) {
-            $cart[$id]['qty']++;
-        } else {
-            $cart[$id] = [
-                "name" => $product->name,
-                "price" => $product->price,
-                "image" => $product->file_path,
-                "qty" => 1
-            ];
-        }
+    $productId = (string)$product->id;
 
-        session()->put('cart', $cart);
-
-        return redirect()->route('cart.index');
+    if(isset($cart[$productId])) {
+        $cart[$productId]['qty'] += 1;
+    } else {
+        $cart[$productId] = [
+            'id' => $product->id,
+            'name' => $product->name,
+            'price' => $product->price,
+            'image' => $product->file_path,
+            'qty' => 1
+        ];
     }
+
+    session()->put('cart', $cart);
+
+    return redirect()->route('cart.index');
+}
 
     public function remove($id)
     {
@@ -50,4 +53,16 @@ class CartController extends Controller
 
         return redirect()->back();
     }
+
+    public function update(Request $request, $id)
+{
+    $cart = session()->get('cart');
+
+    if(isset($cart[$id])) {
+        $cart[$id]['qty'] = max(1, $request->qty);
+        session()->put('cart', $cart);
+    }
+
+    return redirect()->back();
+}
 }
