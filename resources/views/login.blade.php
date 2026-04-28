@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login - Dapoer Tabi</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/logo.png') }}">
   <!-- Google Fonts -->
@@ -35,12 +36,15 @@
                     required>
             </div>
 
-            <div class="mb-4">
-                <input type="password" 
+            <div class="mb-4 position-relative">
+                <input type="password"
+                    class="form-control password-field"
                     name="password"
-                    class="form-control" 
+                    autocomplete="new-password"
                     placeholder="Password"
                     required>
+                <i class="bi bi-eye toggle-password"></i>
+
             </div>
 
             <div class="mb-4 d-flex justify-content-between align-items-center">
@@ -65,11 +69,13 @@
                 Don't have an account? 
                 <a href="{{ route('register') }}">Register</a>
             </p>
-            <a href="{{ url('/forgot-pw') }}">Forgot Password?</a>
+            <a href="{{ route('forgot-pw') }}">Forgot Password?</a>
         </div>
     </div>
   </div>
 </div>
+
+<script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>

@@ -251,49 +251,73 @@ loadSelectedProducts();
         });
     });
 
-   
+ // ================= CART =================
 
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-  const button = document.getElementById("addtocartButton");
+  const buttons = document.querySelectorAll(".add-to-cart-btn");
   const popup = document.getElementById("cart-popup");
 
-  if (!button || !popup) return;
+  if (!buttons.length || !popup) return;
 
-  button.addEventListener("click", function (e) {
-    e.preventDefault();
+  buttons.forEach(button => {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
 
-    popup.classList.add("show");
+      const form = button.closest("form");
 
-    setTimeout(() => {
-      popup.classList.remove("show");
       form.submit();
-    }, 2000);
 
+      popup.classList.add("show");
+
+      setTimeout(() => {
+        popup.classList.remove("show");
+      }, 1500);
+    });
   });
 
 });
 
- // ================= QTY IN DETAIL =================
-  document.querySelectorAll('.qty-box1').forEach(box => {
-    const minus = box.querySelector('.minus');
-    const plus = box.querySelector('.plus');
-    const value = box.querySelector('.qty-value1');
+ // ================= DELETE CART =================
+document.addEventListener("DOMContentLoaded", function () {
 
-    minus?.addEventListener('click', () => {
-      let count = parseInt(value.textContent);
-      if (count > 1) {
-        value.textContent = count - 1;
-        updateTotal();
-      }
-    });
+  const deleteButtons = document.querySelectorAll(".delete-btn");
+  const confirmPopup = document.getElementById("confirm-popup");
+  const successPopup = document.getElementById("delete-popup");
 
-    plus?.addEventListener('click', () => {
-      let count = parseInt(value.textContent);
-      value.textContent = count + 1;
-      updateTotal();
+  const btnYes = document.getElementById("confirm-yes");
+  const btnNo = document.getElementById("confirm-no");
+
+  let selectedForm = null;
+
+  // klik tombol delete
+  deleteButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      selectedForm = button.closest("form");
+      confirmPopup.classList.add("show");
     });
   });
+
+  // klik batal
+  btnNo.addEventListener("click", function () {
+    confirmPopup.classList.remove("show");
+    selectedForm = null;
+  });
+
+  // klik YES (hapus)
+  btnYes.addEventListener("click", function () {
+    confirmPopup.classList.remove("show");
+
+    // tampilkan popup berhasil
+    successPopup.classList.add("show");
+
+    setTimeout(() => {
+      successPopup.classList.remove("show");
+      selectedForm.submit(); // baru hapus data
+    }, 1200);
+  });
+
+});
 
   // TESTIMONIALS CAROUSEL
   document.addEventListener("DOMContentLoaded", function () {
@@ -306,7 +330,6 @@ loadSelectedProducts();
   const visibleItems = 3;
   let index = 0;
 
-  // 👉 clone semua item (biar infinite smooth)
   items.forEach(item => {
     list.appendChild(item.cloneNode(true));
   });
@@ -332,4 +355,54 @@ loadSelectedProducts();
 
   setInterval(slide, 2500);
 
+});
+
+ // ================= SUCCESS POPUP  =================
+
+document.addEventListener("DOMContentLoaded", function(){
+    const popup = document.getElementById("successPopup");
+
+    if(popup){
+        popup.classList.add("show");
+
+        // hilang sendiri setelah 2.5 detik
+        setTimeout(() => {
+            popup.classList.remove("show");
+        }, 2500);
+    }
+});
+
+ // ================= SHOW PASSWORD =================
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.toggle-password').forEach(function (icon) {
+        icon.addEventListener('click', function () {
+
+            const input = this.parentElement.querySelector('.password-field');
+
+            if (!input) return;
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                this.classList.remove('bi-eye');
+                this.classList.add('bi-eye-slash');
+            } else {
+                input.type = 'password';
+                this.classList.remove('bi-eye-slash');
+                this.classList.add('bi-eye');
+            }
+
+        });
+    });
+
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const popup = document.getElementById("successPopup");
+
+  if (popup) {
+    setTimeout(() => {
+      popup.classList.remove("show");
+    }, 1500);
+  }
 });

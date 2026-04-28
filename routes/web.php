@@ -22,6 +22,14 @@ Route::get('/login', [AuthController::class,'showLogin'])->name('login');
 Route::post('/login', [AuthController::class,'login'])->name('login');
 Route::post('/logout', [AuthController::class,'logout'])->name('logout');
 
+Route::get('/forgot-pw', function () {
+    return view('forgot-pw');
+})->name('forgot-pw');
+
+Route::get('/reset-pw', function () {
+    return view('reset-pw');
+})->name('reset-pw');
+
 Route::get('/register', function () {
     return view('register');
 })->name('register');

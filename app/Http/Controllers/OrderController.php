@@ -67,7 +67,8 @@ public function store(Request $request)
 
     return redirect()
         ->route('history')
-        ->with('success', 'Pesanan berhasil dibuat. Silakan bayar di tempat.');
+        ->with('success', 'Order successfully created!')
+        ->with('payment', 'cash');
 }
 //     public function store(Request $request)
 // {

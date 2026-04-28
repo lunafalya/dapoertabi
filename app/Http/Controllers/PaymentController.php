@@ -27,9 +27,12 @@ $order->update([
     'payment_proof' => $file,
     'status' => 'pending_verification'
 ]);
+    session()->forget('cart');
+
 
    return redirect()->route('history')
-   ->with('success','Bukti transfer dikirim');
+   ->with('success','Payment confirmation has been sent!')
+   ->with('payment', 'cashless');
 }
 public function __construct()
     {

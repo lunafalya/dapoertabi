@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reset Password - Dapoer Tabi</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/logo.png') }}">
   <!-- Google Fonts -->
@@ -24,12 +25,24 @@
       <p class="text mb-4">Please enter your new password below.</p>
 
       <form action="" method="POST" enctype="multipart/form-data">
-        <div class="mb-3">
-          <input type="password" class="form-control" id="password" name="password" placeholder="Enter your new password" required>
+        <div class="mb-3 position-relative">
+            <input type="password"
+              class="form-control password-field"
+              name="password"
+              autocomplete="new-password"
+              placeholder="Password"
+              required>
+            <i class="bi bi-eye toggle-password"></i>
         </div>
 
-        <div class="mb-3">
-          <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your new password" required>
+        <div class="mb-3 position-relative">
+          <input type="password"
+            class="form-control password-field"
+            name="password_confirmation"
+            autocomplete="new-password"
+            placeholder="Confirm Password"
+            required>
+            <i class="bi bi-eye toggle-password"></i>
         </div>
 
         <button type="submit" class="btn btn-login w-100 py-2">Reset</button>
@@ -38,6 +51,8 @@
     </div>
   </div>
 </div>
+
+<script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>

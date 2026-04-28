@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register - Dapoer Tabi</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/fonts/bootstrap-icons.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/logo.png') }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/logo.png') }}">
   <!-- Google Fonts -->
@@ -49,12 +51,24 @@
           <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your phone number" required>
         </div>
 
-        <div class="mb-3">
-          <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+        <div class="mb-3 position-relative">
+            <input type="password"
+              class="form-control password-field"
+              name="password"
+              autocomplete="new-password"
+              placeholder="Password"
+              required>
+            <i class="bi bi-eye toggle-password"></i>
         </div>
 
-        <div class="mb-3">
-          <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password" required>
+        <div class="mb-3 position-relative">
+          <input type="password"
+            class="form-control password-field"
+            name="password_confirmation"
+            autocomplete="new-password"
+            placeholder="Confirm Password"
+            required>
+            <i class="bi bi-eye toggle-password"></i>
         </div>
 
         <div class="mb-3">
@@ -76,6 +90,8 @@
     </div>
   </div>
 </div>
+
+<script src="{{ asset('js/app.js') }}"></script>
 
 </body>
 </html>

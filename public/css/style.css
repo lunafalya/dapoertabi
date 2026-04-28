@@ -21,7 +21,7 @@ main {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 80px;
+  padding: 0px 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,6 +32,7 @@ main {
 .logo img {
   height: 100px;
   object-fit: contain;
+  margin-top: 15px;
 }
 
 .wave-nav{
@@ -1206,7 +1207,15 @@ margin-bottom: 30px;
 .input-row {
   display: flex;
   gap: 15px;
+  width: 100%;
   margin-bottom: 15px;
+}
+
+.file-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 5px;
 }
 
 .input-row input,
@@ -1281,6 +1290,12 @@ margin-top: 15px;
 width: 100%;
 }
 
+.checkout-form {
+  margin-top: 10px;
+  color: #8D653D;
+  font-size: 15px;
+}
+
 .checkout-btn:hover {
     background-color: var(--accent-color);
     color: var(--dark-bg);
@@ -1311,11 +1326,6 @@ input[type="radio"] {
 .appointment-form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-}
-
-.input-row {
-    display: flex;
     gap: 15px;
 }
 
@@ -1395,16 +1405,6 @@ background-color: #EBD0B5;
     font-size: 18px;
 }
 
-@media (max-width: 650px) {
-    .input-row {
-        flex-direction: column;
-        gap: 15px;
-    }
-    .booking-card {
-        padding: 30px 20px;
-    }
-}
-
 .profile-page-container {
     display: flex;
     justify-content: center;
@@ -1458,7 +1458,7 @@ background-color: #EBD0B5;
 
 .form-group input {
     width: 100%;
-    padding: 15px 10px;
+    padding: 10px 10px;
     border: none;
     background-color: #f0f0f0; 
     font-size: 16px;
@@ -1466,6 +1466,21 @@ background-color: #EBD0B5;
     box-sizing: border-box; 
     outline: none;
     border-radius: 0px;
+}
+
+.form-group-edit input {
+    width: 100%;
+    padding: 10px 10px;
+    border: 1px solid #8b5e3c;
+    font-size: 16px;
+    box-sizing: border-box; 
+    outline: none;
+    border-radius: 0px;
+    margin-top: 5px;
+}
+
+.form-group-edit textarea {
+    margin-top: 5px;
 }
 
 .edit-button {
@@ -1476,7 +1491,7 @@ background-color: #EBD0B5;
     font-size: 18px;
     font-weight: 500;
     cursor: pointer;
-    margin-top: 25px; 
+    margin-top: 10px; 
     transition: background-color 0.2s;
     border-radius: 8px;
     text-align: center;
@@ -1950,6 +1965,21 @@ a:hover {
   flex-direction: column;
 }
 
+.cart-empty h3 {
+  text-align: center;
+  color: #8D653D;
+  font-size: 22px;
+  margin-top: 20px;
+  font-weight: 500;
+}
+
+.cart-empty p {
+  text-align: center;
+  color: #868686;
+  font-size: 15px;
+  margin-top: 15px;
+}
+
 .cart-link {
   position: relative;
 }
@@ -2079,6 +2109,7 @@ a:hover {
   font-weight: 500;
   border-radius: 5px;
   cursor: pointer;
+  margin-top: 15px;
 }
 
 
@@ -2157,10 +2188,17 @@ a:hover {
   animation: pop 0.3s ease;
 }
 
-.popup-box p {
+.popup-box h3 {
   font-size: 20px;
   color: #8D653D;
   margin-top: 18px;
+  font-weight: 500;
+}
+
+.popup-box p {
+  font-size: 15px;
+  color: #868686;
+  margin-top: 8px;
 }
 
 /* icon */
@@ -2181,6 +2219,38 @@ a:hover {
   color: #fff;
   border-radius: 5px;
   text-decoration: none;
+}
+
+.no-delete-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 8px 20px;
+  background: #A06F3F;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;          
+  outline: none;         
+  box-shadow: none; 
+  width: 80px;
+}
+
+.delete-cart-btn {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 8px 20px;
+  background: #f0f0f0;
+  color: #856404;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;          
+  outline: none;         
+  box-shadow: none;  
+  width: 80px;
+}
+
+.delete-cart-btn:hover, .no-delete-btn:hover {
+  text-decoration: underline;
 }
 
 /* animasi */
@@ -2429,6 +2499,7 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
+  margin-bottom: 10px;
   padding: 15px 20px;
   background: #f7f2ec;
   border-radius: 5px;
@@ -2561,3 +2632,60 @@ a:hover {
   font-weight: 300;
   margin: 0 0 20px;
 }   
+
+.status-pending-pill {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-pill {
+    background-color: #fff3cd;
+    color: #856404;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-done-pill {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-failed-pill {
+    background-color: #fddddf;
+    color: #cb0014;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 999;
+    color: #fff;
+    font-size: 20px;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+
+input::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+    display: none !important;
+}

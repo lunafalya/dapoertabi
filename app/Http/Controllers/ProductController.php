@@ -13,9 +13,12 @@ use App\Models\Review;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $products = Product::when($request->search, function ($query, $search) {
+        $query->where('name', 'like', "%{$search}%");
+        })->get();
+
         return view('products', compact('products'));
     }
 
