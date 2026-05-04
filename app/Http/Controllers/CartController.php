@@ -55,14 +55,20 @@ class CartController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $cart = session()->get('cart');
+    {
+        $cart = session()->get('cart', []);
 
-    if(isset($cart[$id])) {
-        $cart[$id]['qty'] = max(1, $request->qty);
-        session()->put('cart', $cart);
+        if(isset($cart[$id])) {
+            $cart[$id]['qty'] = max(1, $request->qty);
+            session()->put('cart', $cart);
+
+            return response()->json([
+                'success' => true,
+                'qty' => $cart[$id]['qty'],
+                'subtotal' => $cart[$id]['qty'] * $cart[$id]['price']
+            ]);
+        }
+
+        return response()->json(['success' => false]);
     }
-
-    return redirect()->back();
-}
 }
