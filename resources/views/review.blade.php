@@ -19,11 +19,11 @@
         
         <h2 class="review-title">Add Review</h2>
 
-        <form method="POST" action="{{ route('review.store') }}" class="review-form">
+        <form method="POST" action="{{ route('review.store') }}" class="review-form" id="reviewForm">
         @csrf
 
         <input type="hidden" name="checkout_id" value="{{ $checkout->id }}">
-        <input type="hidden" name="rating" id="ratingValue" value="5">
+        <input type="hidden" name="rating" id="ratingValue"> <!-- tidak ada default -->
 
         <!-- RATING -->
         <div class="form-group-edit">
@@ -58,9 +58,39 @@
 </section>
 
 <!-- FOOTER -->
-@include('layouts.footer')  
+@include('layouts.footer')
 
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+// ⭐ HANDLE CLICK STAR
+const stars = document.querySelectorAll('#starRating .star');
+const ratingInput = document.getElementById('ratingValue');
+
+stars.forEach(star => {
+    star.addEventListener('click', function() {
+        let value = this.getAttribute('data-value');
+        ratingInput.value = value;
+
+        // reset warna
+        stars.forEach(s => s.classList.remove('active'));
+
+        // kasih warna sampai bintang yg dipilih
+        stars.forEach(s => {
+            if (s.getAttribute('data-value') <= value) {
+                s.classList.add('active');
+            }
+        });
+    });
+});
+
+// 🚨 VALIDASI SUBMIT
+document.getElementById('reviewForm').addEventListener('submit', function(e) {
+    if (!ratingInput.value) {
+        e.preventDefault();
+        alert("Silakan pilih rating bintang terlebih dahulu!");
+    }
+});
+</script>
 
 </body>
 </html>
