@@ -32,12 +32,14 @@
             </p>
             <form action="{{ route('cart.add', $product->id) }}" method="POST">
                 @csrf
-            <div class="qty-box1">
-                <button class="qty-btn minus">-</button>
-                <span class="qty-display">1</span> 
-                <input type="hidden" name="quantity" class="qty-input" value="1">
-                <button class="qty-btn plus">+</button>
+            <div class="qty-box">
+                <button type="button" class="qty-btn btn-minus">-</button>
+                <span class="qty-value">1</span>
+                <button type="button" class="qty-btn btn-plus">+</button>
             </div>
+
+            <input type="hidden" name="quantity" id="quantityInput" value="1">
+
                 <button type="submit" class="add-to-cart-btn" id="addtocartButton{{ $product->id }}">
                     Add to Cart
                 </button>
@@ -100,5 +102,84 @@
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
+<script>
+let qty = 1;
+const qtyEl = document.querySelector('.qty-value');
+const input = document.getElementById('quantityInput');
+
+document.querySelector('.btn-plus').addEventListener('click', () => {
+    qty++;
+    qtyEl.innerText = qty;
+    input.value = qty;
+});
+
+document.querySelector('.btn-minus').addEventListener('click', () => {
+    if (qty > 1) {
+        qty--;
+        qtyEl.innerText = qty;
+        input.value = qty;
+    }
+});
+</script>
+<script>
+document.querySelectorAll('.cart-item').forEach(item => {
+    let id = item.dataset.id;
+
+    let btnPlus = item.querySelector('.btn-plus');
+    let btnMinus = item.querySelector('.btn-minus');
+    let qtyEl = item.querySelector('.qty-value');
+    let subtotalEl = item.querySelector('.subtotal');
+    let price = parseInt(item.querySelector('.cart-price').dataset.price);
+
+    function formatRupiah(number) {
+        return 'Rp. ' + number.toLocaleString('id-ID');
+    }
+
+    function updateQty(newQty) {
+        fetch(`/cart/update/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ qty: newQty })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                qtyEl.innerText = data.qty;
+                subtotalEl.innerText = formatRupiah(data.subtotal);
+
+                updateTotal(); // update total bawah
+            }
+        });
+    }
+
+    btnPlus.addEventListener('click', () => {
+        let qty = parseInt(qtyEl.innerText);
+        updateQty(qty + 1);
+    });
+
+    btnMinus.addEventListener('click', () => {
+        let qty = parseInt(qtyEl.innerText);
+        if (qty > 1) updateQty(qty - 1);
+    });
+});
+
+// 🔥 UPDATE TOTAL SEMUA
+function updateTotal() {
+    let total = 0;
+
+    document.querySelectorAll('.cart-item').forEach(item => {
+        let qty = parseInt(item.querySelector('.qty-value').innerText);
+        let price = parseInt(item.querySelector('.cart-price').dataset.price);
+
+        total += qty * price;
+    });
+
+    document.querySelector('.cart-summary div:last-child').innerText =
+        'Rp. ' + total.toLocaleString('id-ID');
+}
+</script>
 </body>
 </html>

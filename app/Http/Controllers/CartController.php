@@ -21,14 +21,15 @@ class CartController extends Controller
 {
     $product = Product::findOrFail($id);
 
-    $qty = (int) $request->quantity ?? 1;
+    // ambil qty, default 1 kalau kosong / invalid
+    $qty = max(1, (int) $request->quantity);
 
     $cart = session()->get('cart', []);
-
     $productId = (string)$product->id;
 
     if(isset($cart[$productId])) {
-        $cart[$productId]['qty'] = $qty;
+        // 🔥 TAMBAH, bukan replace
+        $cart[$productId]['qty'] += $qty;
     } else {
         $cart[$productId] = [
             'id' => $product->id,
@@ -41,7 +42,7 @@ class CartController extends Controller
 
     session()->put('cart', $cart);
 
-    return redirect()->route('cart.index');
+    return redirect()->back(); // biar balik ke detail
 }
 
     public function remove($id)
