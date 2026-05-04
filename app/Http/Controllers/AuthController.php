@@ -13,11 +13,11 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:25',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|string|max:20',
             'password' => 'required|confirmed|min:6',
-            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,png|max:5000'
         ]);
 
         $photoPath = null;
