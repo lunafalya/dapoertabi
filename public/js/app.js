@@ -406,3 +406,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 1500);
   }
 });
+
+// ================= QTY IN DETAIL=================
+document.querySelectorAll('.qty-box1').forEach(box => {
+  const minus = box.querySelector('.minus');
+  const plus = box.querySelector('.plus');
+  const display = box.querySelector('.qty-display');
+  const input = box.querySelector('.qty-input');
+
+  minus.onclick = () => {
+    let count = parseInt(display.textContent);
+    if (count > 1) {
+      count--;
+      display.textContent = count;
+      input.value = count;
+    }
+  };
+
+  plus.onclick = () => {
+    let count = parseInt(display.textContent);
+    count++;
+    display.textContent = count;
+    input.value = count;
+  };
+});

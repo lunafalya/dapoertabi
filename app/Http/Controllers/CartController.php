@@ -17,23 +17,25 @@ class CartController extends Controller
         return view('cart', compact('cart'));
     }
 
-    public function add($id)
+    public function add($id, Request $request)
 {
     $product = Product::findOrFail($id);
+
+    $qty = (int) $request->quantity ?? 1;
 
     $cart = session()->get('cart', []);
 
     $productId = (string)$product->id;
 
     if(isset($cart[$productId])) {
-        $cart[$productId]['qty'] += 1;
+        $cart[$productId]['qty'] = $qty;
     } else {
         $cart[$productId] = [
             'id' => $product->id,
             'name' => $product->name,
             'price' => $product->price,
             'image' => $product->file_path,
-            'qty' => 1
+            'qty' => $qty
         ];
     }
 
