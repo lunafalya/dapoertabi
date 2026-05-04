@@ -36,11 +36,22 @@
                 Rp. {{ number_format($item['price'],0,',','.') }}
             </div>
 
-            <form action="{{ route('cart.update', $id) }}" method="POST" class="qty-box">
+            <form action="{{ route('cart.update', $item['id']) }}" method="POST" class="cart-form">
                 @csrf
-                <button name="qty" value="{{ $item['qty'] - 1 }}" class="qty-btn">-</button>
-                <span class="qty-value">{{ $item['qty'] }}</span>
-                <button name="qty" value="{{ $item['qty'] + 1 }}" class="qty-btn">+</button>
+                @method('PUT')
+                <div class="qty-box">
+                    <button type="button" class="qty-btn minus">-</button>
+
+                    <input 
+                        type="number" 
+                        name="quantity" 
+                        value="{{ $item['qty'] }}" 
+                        min="1"
+                        class="qty-input"
+                    >
+
+                    <button type="button" class="qty-btn plus">+</button>
+                </div>
             </form>
 
             <div class="cart-total">
@@ -49,7 +60,7 @@
 
             <form action="{{ route('cart.remove', $id) }}" method="POST" class="delete-form">
                 @csrf
-                <button type="button" class="delete-btn">
+                <button type="submit" class="delete-btn">
                     <i class="bi bi-trash"></i>
                 </button>
             </form>

@@ -17,32 +17,32 @@ class CartController extends Controller
         return view('cart', compact('cart'));
     }
 
-    public function add($id, Request $request)
-{
-    $product = Product::findOrFail($id);
+    public function add(Request $request, $id)
+    {
 
-    $qty = (int) $request->quantity ?? 1;
+        $product = Product::findOrFail($id);
 
-    $cart = session()->get('cart', []);
+        $qty = (int) ($request->input('quantity', 1));
 
-    $productId = (string)$product->id;
+        $cart = session()->get('cart', []);
+        $productId = (string)$product->id;
 
-    if(isset($cart[$productId])) {
-        $cart[$productId]['qty'] = $qty;
-    } else {
-        $cart[$productId] = [
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->price,
-            'image' => $product->file_path,
-            'qty' => $qty
-        ];
+        if(isset($cart[$productId])) {
+            $cart[$productId]['qty'] += $qty;
+        } else {
+            $cart[$productId] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->price,
+                'image' => $product->file_path,
+                'qty' => $qty
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        return redirect()->route('cart.index');
     }
-
-    session()->put('cart', $cart);
-
-    return redirect()->route('cart.index');
-}
 
     public function remove($id)
     {
@@ -58,10 +58,11 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
 {
-    $cart = session()->get('cart');
+    $cart = session()->get('cart', []);
 
     if(isset($cart[$id])) {
-        $cart[$id]['qty'] = max(1, $request->qty);
+        $qty = (int) ($request->input('quantity', 1)); // ambil dari input
+        $cart[$id]['qty'] = max(1, $qty); // pastikan minimal 1
         session()->put('cart', $cart);
     }
 

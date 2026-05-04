@@ -2047,27 +2047,45 @@ a:hover {
 .qty-btn {
   border: none;
   color: #8D653D;
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   background: #eee;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 20px;
   border-radius: 6px;
 }
 
 /* angka */
-.qty-value {
-  min-width: 20px;
+.qty-display {
+  width: 50px;
+  height: 30px;
   text-align: center;
   font-size: 15px;
   color: #8D653D;
+  -moz-appearance: textfield;
 }
 
-.qty-value1 {
-  min-width: 20px;
+
+.qty-display::-webkit-outer-spin-button,
+.qty-display::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.qty-input {
+  width: 50px;
+  height: 30px;
   text-align: center;
-  font-size: 20px;
+  font-size: 15px;
   color: #8D653D;
+  -moz-appearance: textfield;
+}
+
+
+.qty-input::-webkit-outer-spin-button,
+.qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .cart-total{

@@ -33,10 +33,15 @@
             <form action="{{ route('cart.add', $product->id) }}" method="POST">
                 @csrf
             <div class="qty-box1">
-                <button class="qty-btn minus">-</button>
-                <span class="qty-display">1</span> 
-                <input type="hidden" name="quantity" class="qty-input" value="1">
-                <button class="qty-btn plus">+</button>
+                <button type="button" class="qty-btn minus">-</button>
+                <input 
+                    type="number" 
+                    class="qty-display" 
+                    name="quantity" 
+                    value="1" 
+                    min="1"
+                >
+                <button type="button" class="qty-btn plus">+</button>
             </div>
                 <button type="submit" class="add-to-cart-btn" id="addtocartButton{{ $product->id }}">
                     Add to Cart
