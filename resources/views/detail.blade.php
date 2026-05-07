@@ -32,12 +32,6 @@
             </p>
             <form action="{{ route('cart.add', $product->id) }}" method="POST">
                 @csrf
-<<<<<<< HEAD
-            <div class="qty-box">
-                <button type="button" class="qty-btn btn-minus">-</button>
-                <span class="qty-value">1</span>
-                <button type="button" class="qty-btn btn-plus">+</button>
-=======
             <div class="qty-box1">
                 <button type="button" class="qty-btn minus">-</button>
                 <input 
@@ -48,10 +42,7 @@
                     min="1"
                 >
                 <button type="button" class="qty-btn plus">+</button>
->>>>>>> acde70f980869d1a6cfcdc8f4e10af52cf74269f
             </div>
-
-            <input type="hidden" name="quantity" id="quantityInput" value="1">
 
                 <button type="submit" class="add-to-cart-btn" id="addtocartButton{{ $product->id }}">
                     Add to Cart
@@ -194,5 +185,17 @@ function updateTotal() {
         'Rp. ' + total.toLocaleString('id-ID');
 }
 </script>
+
+@if(session('added_to_cart'))
+<script>
+    const popup = document.getElementById('cart-popup');
+    popup.classList.add('show');
+
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 2500);
+</script>
+@endif
+
 </body>
 </html>

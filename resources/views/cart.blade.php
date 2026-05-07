@@ -119,6 +119,17 @@ document.querySelectorAll('.qty-input').forEach(input => {
 });
 </script>
 
+@if(session('added_to_cart'))
+<script>
+    const popup = document.getElementById('cart-popup');
+    popup.classList.add('show');
+
+    setTimeout(() => {
+        popup.classList.remove('show');
+    }, 2500);
+</script>
+@endif
+
 </body>
 </html>
 
