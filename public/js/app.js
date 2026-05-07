@@ -168,13 +168,13 @@ function updateTotal() {
   document.querySelectorAll('.cart-item').forEach(item => {
     const checkbox = item.querySelector('.item-check');
     const priceEl = item.querySelector('.cart-price');
-    const qtyEl = item.querySelector('.qty-value');
+    const qtyEl = item.querySelector('.qty-input');
     const totalEl = item.querySelector('.cart-total');
 
     if (!checkbox || !priceEl || !qtyEl || !totalEl) return;
 
     const price = parseInt(priceEl.dataset.price);
-    const qty = parseInt(qtyEl.textContent);
+    const qty = parseInt(qtyEl.value);
     const total = price * qty;
 
     totalEl.textContent = formatRupiah(total);
@@ -251,32 +251,6 @@ loadSelectedProducts();
         });
     });
 
- // ================= CART =================
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  const buttons = document.querySelectorAll(".add-to-cart-btn");
-  const popup = document.getElementById("cart-popup");
-
-  if (!buttons.length || !popup) return;
-
-  buttons.forEach(button => {
-    button.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      const form = button.closest("form");
-
-      form.submit();
-
-      popup.classList.add("show");
-
-      setTimeout(() => {
-        popup.classList.remove("show");
-      }, 1500);
-    });
-  });
-
-});
 
  // ================= DELETE CART =================
 document.addEventListener("DOMContentLoaded", function () {
@@ -290,31 +264,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let selectedForm = null;
 
-  // klik tombol delete
+  if (!deleteButtons.length || !confirmPopup) return;
+
   deleteButtons.forEach(button => {
-    button.addEventListener("click", function () {
+    button.addEventListener("click", function (e) {
+      e.preventDefault();
+
       selectedForm = button.closest("form");
       confirmPopup.classList.add("show");
     });
   });
 
-  // klik batal
-  btnNo.addEventListener("click", function () {
+  btnNo?.addEventListener("click", function () {
     confirmPopup.classList.remove("show");
     selectedForm = null;
   });
 
-  // klik YES (hapus)
-  btnYes.addEventListener("click", function () {
+  btnYes?.addEventListener("click", function () {
     confirmPopup.classList.remove("show");
 
-    // tampilkan popup berhasil
-    successPopup.classList.add("show");
+    successPopup?.classList.add("show");
 
     setTimeout(() => {
-      successPopup.classList.remove("show");
-      selectedForm.submit(); // baru hapus data
-    }, 1200);
+      successPopup?.classList.remove("show");
+
+      if (selectedForm) {
+        selectedForm.submit(); // HARUS ini yang kirim POST
+      }
+    }, 800);
   });
 
 });
@@ -407,26 +384,54 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// ================= QTY IN DETAIL=================
-document.querySelectorAll('.qty-box1').forEach(box => {
-  const minus = box.querySelector('.minus');
-  const plus = box.querySelector('.plus');
-  const display = box.querySelector('.qty-display');
-  const input = box.querySelector('.qty-input');
+// ================= CART =================
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.cart-form').forEach(form => {
+    const minus = form.querySelector('.minus');
+    const plus = form.querySelector('.plus');
+    const input = form.querySelector('.qty-input');
 
-  minus.onclick = () => {
-    let count = parseInt(display.textContent);
-    if (count > 1) {
-      count--;
-      display.textContent = count;
-      input.value = count;
-    }
-  };
+    const submitForm = () => {
+      form.submit();
+    };
 
-  plus.onclick = () => {
-    let count = parseInt(display.textContent);
-    count++;
-    display.textContent = count;
-    input.value = count;
-  };
+    minus.addEventListener("click", () => {
+      let count = parseInt(input.value) || 1;
+      if (count > 1) {
+        input.value = count - 1;
+        submitForm();
+      }
+    });
+
+    plus.addEventListener("click", () => {
+      let count = parseInt(input.value) || 1;
+      input.value = count + 1;
+      submitForm();
+    });
+
+    // kalau user ketik manual
+    input.addEventListener("input", () => {
+      submitForm();
+    });
+  });
+});
+
+
+// ================= QTY IN DETAIL =================
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.qty-box1').forEach(box => {
+    const minus = box.querySelector('.minus');
+    const plus = box.querySelector('.plus');
+    const input = box.querySelector('.qty-display');
+
+    minus.addEventListener("click", () => {
+      let count = parseInt(input.value) || 1;
+      if (count > 1) input.value = count - 1;
+    });
+
+    plus.addEventListener("click", () => {
+      let count = parseInt(input.value) || 1;
+      input.value = count + 1;
+    });
+  });
 });

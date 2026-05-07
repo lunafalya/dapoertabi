@@ -17,33 +17,34 @@ class CartController extends Controller
         return view('cart', compact('cart'));
     }
 
-    public function add($id, Request $request)
-{
-    $product = Product::findOrFail($id);
+        public function add(Request $request, $id)
+    {
+        // ambil produk dari database
+        $product = Product::findOrFail($id);
 
-    // ambil qty, default 1 kalau kosong / invalid
-    $qty = max(1, (int) $request->quantity);
+        // ambil qty, default 1
+        $qty = max(1, (int) $request->quantity);
 
-    $cart = session()->get('cart', []);
-    $productId = (string)$product->id;
+        $cart = session()->get('cart', []);
+        $productId = (string) $product->id;
 
-    if(isset($cart[$productId])) {
-        // 🔥 TAMBAH, bukan replace
-        $cart[$productId]['qty'] += $qty;
-    } else {
-        $cart[$productId] = [
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->price,
-            'image' => $product->file_path,
-            'qty' => $qty
-        ];
+        if (isset($cart[$productId])) {
+            // tambah qty, bukan replace
+            $cart[$productId]['qty'] += $qty;
+        } else {
+            $cart[$productId] = [
+                'id'    => $product->id,
+                'name'  => $product->name,
+                'price' => $product->price,
+                'image' => $product->file_path,
+                'qty'   => $qty
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        return redirect()->back();
     }
-
-    session()->put('cart', $cart);
-
-    return redirect()->back(); // biar balik ke detail
-}
 
     public function remove($id)
     {
@@ -61,17 +62,27 @@ class CartController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        if(isset($cart[$id])) {
-            $cart[$id]['qty'] = max(1, $request->qty);
-            session()->put('cart', $cart);
-
-            return response()->json([
-                'success' => true,
-                'qty' => $cart[$id]['qty'],
-                'subtotal' => $cart[$id]['qty'] * $cart[$id]['price']
-            ]);
+        if (!isset($cart[$id])) {
+            return redirect()->back();
         }
 
-        return response()->json(['success' => false]);
+        // kalau user ketik manual
+        if ($request->filled('quantity')) {
+            $qty = max(1, (int) $request->quantity);
+        } else {
+            $qty = $cart[$id]['qty'];
+        }
+
+        // kalau klik tombol
+        if ($request->action === 'increase') {
+            $qty++;
+        } elseif ($request->action === 'decrease') {
+            $qty = max(1, $qty - 1);
+        }
+
+        $cart[$id]['qty'] = $qty;
+        session()->put('cart', $cart);
+
+        return redirect()->back();
     }
 }

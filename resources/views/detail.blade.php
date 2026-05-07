@@ -32,10 +32,23 @@
             </p>
             <form action="{{ route('cart.add', $product->id) }}" method="POST">
                 @csrf
+<<<<<<< HEAD
             <div class="qty-box">
                 <button type="button" class="qty-btn btn-minus">-</button>
                 <span class="qty-value">1</span>
                 <button type="button" class="qty-btn btn-plus">+</button>
+=======
+            <div class="qty-box1">
+                <button type="button" class="qty-btn minus">-</button>
+                <input 
+                    type="number" 
+                    class="qty-display" 
+                    name="quantity" 
+                    value="1" 
+                    min="1"
+                >
+                <button type="button" class="qty-btn plus">+</button>
+>>>>>>> acde70f980869d1a6cfcdc8f4e10af52cf74269f
             </div>
 
             <input type="hidden" name="quantity" id="quantityInput" value="1">
