@@ -55,18 +55,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/remove/{id}', [CartController::class,'remove'])->name('cart.remove');
     Route::put('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     
-
     Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
     Route::get('/checkout', [OrderController::class, 'index'])->name('checkout.index');
     Route::get('/checkout/success', [OrderController::class, 'success'])->name('checkout.success');
 
     Route::get('/payment/{order}', [PaymentController::class, 'process'])
         ->name('payment.process');
-
     Route::get('/payment/{order}', [PaymentController::class,'show'])->name('payment.show');
-
     Route::post('/payment/{order}/upload', [PaymentController::class,'upload'])->name('payment.upload');
-
     Route::post('/payment/callback', [PaymentController::class, 'callback'])
         ->name('payment.callback');
 
@@ -76,8 +72,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/review/{checkout}', [ReviewController::class,'create'])->name('review.create');
     Route::post('/review', [ReviewController::class,'store'])->name('review.store');
-
-    
 });
 
 

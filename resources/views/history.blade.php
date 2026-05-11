@@ -54,7 +54,9 @@
 
                     {{-- STATUS --}}
                     <td>
-                        @if ($booking->status === 'pending')
+                         @if ($booking->status === 'pending_payment')
+                            <span class="status-pill status-pending-pill">Waiting Payment</span>
+                        @elseif ($booking->status === 'pending')
                             <span class="status-pill status-pending-pill">Pending</span>
                         @elseif ($booking->status === 'done')
                             <span class="status-pill status-done-pill">Done</span>
@@ -67,21 +69,41 @@
                         @endif
                     </td>
 
-                    {{-- REVIEW --}}
+
                     <td>
-                        @if ($booking->status === 'done')
-                            @if ($item->review)
-                                <span class="review-status added">Review Added</span>
-                            @else
-                                <a href="{{ route('review.create', $item->id) }}"
-                                  class="review-btn add">
-                                    Add Review
+                            {{-- BELUM BAYAR --}}
+                            @if ($booking->status === 'pending_payment')
+                                <a href="{{ route('payment.show', $booking->id) }}"
+                                class="review-btn add">
+                                    Pay Now
                                 </a>
+
+                            {{-- SUDAH BAYAR, NUNGGU ADMIN --}}
+                            @elseif ($booking->status === 'pending_verification')
+                                <span class="review-status waiting">
+                                    Waiting Verification
+                                </span>
+
+                            {{-- SELESAI --}}
+                            @elseif ($booking->status === 'done')
+                                @php
+                                    $hasReview = \App\Models\Review::where('checkout_id', $item->id)->exists();
+                                @endphp
+
+                                @if ($hasReview)
+                                    <span class="review-status added">Review Added</span>
+                                @else
+                                    <a href="{{ route('review.create', $item->id) }}" class="review-btn add">
+                                        Add Review
+                                    </a>
+                                @endif
+
+                            {{-- STATUS LAIN --}}
+                            @else
+                                <span class="review-status disabled">-</span>
                             @endif
-                        @else
-                            <span class="review-status disabled">-</span>
-                        @endif
-                    </td>
+                        </td>
+
                 </tr>
                 @endforeach
             @endforeach

@@ -12,7 +12,18 @@ class PaymentController extends Controller
 
 public function show(Order $order)
 {
-   return view('payment',compact('order'));
+    // pastikan order milik user
+    if ($order->user_id !== auth()->id()) {
+        abort(403);
+    }
+
+    // kalau sudah upload / selesai → ga boleh bayar lagi
+    if ($order->status !== 'pending_payment') {
+        return redirect()->route('history')
+            ->with('error', 'This order cannot be paid again.');
+    }
+
+    return view('payment', compact('order'));
 }
 
 public function upload(Request $request, Order $order)

@@ -2707,3 +2707,16 @@ input::-webkit-credentials-auto-fill-button {
     visibility: hidden;
     display: none !important;
 }
+
+.pay-now-btn {
+    padding: 6px 12px;
+    background: #28a745;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.pay-now-btn:hover {
+    background: #218838;
+}

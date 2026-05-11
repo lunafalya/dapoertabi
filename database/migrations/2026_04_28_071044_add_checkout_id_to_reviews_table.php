@@ -19,10 +19,6 @@ return new class extends Migration
                 ->cascadeOnDelete();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::table('reviews', function (Blueprint $table) {

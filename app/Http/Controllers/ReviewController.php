@@ -53,7 +53,5 @@ class ReviewController extends Controller
 
     return redirect()->route('history')
         ->with('success', 'Review added!');
-}
-
-    
+} 
 }

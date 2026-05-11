@@ -70,6 +70,4 @@ class ProfileController extends Controller
     return view('history', compact('bookings'));
 }
 
-
-
 }

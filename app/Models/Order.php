@@ -27,12 +27,6 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class);
     }
-    // CEK REVIEW PER USER + PRODUCT
-public function review()
-{
-    return $this->hasOne(Review::class, 'checkout_id', 'id');
-}
-
 
     public function items()
     {
