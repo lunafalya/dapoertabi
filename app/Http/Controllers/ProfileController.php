@@ -31,9 +31,9 @@ class ProfileController extends Controller
         $user = Auth::user();
         try { 
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|max:25',
             'email' => 'required|email',
-            'phone' => 'required|string',
+            'phone' => 'required|string|min:6',
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000'
         ]);
 

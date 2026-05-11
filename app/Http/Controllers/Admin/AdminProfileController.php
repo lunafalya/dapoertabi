@@ -21,9 +21,9 @@ class AdminProfileController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'name' => 'required|string',
+            'name' => 'required|string|max:25',
             'email' => 'required|email',
-            'phone' => 'required|string',
+            'phone' => 'required|string|min:6',
             'profile_photo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
