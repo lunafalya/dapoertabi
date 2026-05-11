@@ -1,8 +1,7 @@
-@extends('layouts.admin')
 @php
     $user = Auth::user();
 @endphp
-
+@extends('layouts.admin')
 @section('content')
 
 <style>
@@ -189,14 +188,22 @@
 <script>
       $(document).ready(function() {
 
-    $('.btn-edit-product').on('click', function() {
+    $('.btn-edit-product').click(function () {
 
-        var id = $(this).data('id');
+        let id = $(this).data('id');
+
+        // cek id
+        console.log("ID:", id);
 
         // set action form
-        $('#editProductForm').attr('action', '/admin/products/' + id);
+        let url = "{{ url('/admin/products') }}/" + id;
 
-        // isi field
+        $('#editProductForm').attr('action', url);
+
+        // cek action hasil
+        console.log($('#editProductForm').attr('action'));
+
+        // isi input
         $('#edit-modal-name').val($(this).data('name'));
         $('#edit-modal-category').val($(this).data('category'));
         $('#edit-modal-type').val($(this).data('type'));
@@ -206,11 +213,9 @@
 
     });
 
-    
         $('#addProductModal').on('show.bs.modal', function (event) {
             var modal = $(this);
             modal.find('form').trigger('reset');
-            modal.find('input[name="_method"]').remove();
             modal.find('#add-modal-image-preview').attr('src', 'https://via.placeholder.com/250x180?text=Preview');
         });
 
@@ -260,5 +265,4 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-@yield('scripts')
 @endsection

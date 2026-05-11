@@ -10,6 +10,7 @@
             <form id="editProductForm" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+
                 <div class="modal-body px-3 py-0">
                     <div class="row">
                         <div class="col-md-5 mb-4 mb-md-0">
