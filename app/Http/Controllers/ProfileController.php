@@ -32,7 +32,7 @@ class ProfileController extends Controller
         try { 
         $request->validate([
             'name' => 'required|string|max:25',
-            'email' => 'required|email',
+            'email' => 'required|email|max:30',
             'phone' => 'required|string|min:6',
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5000'
         ]);
